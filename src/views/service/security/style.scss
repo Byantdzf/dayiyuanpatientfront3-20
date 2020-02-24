@@ -1,20 +1,36 @@
 @import '~@/assets/css/mixin.scss';
 @import '~@/assets/css/function.scss';
 .security{
-  .van-tabs{
+  .searchBox{
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .van-search__content{
+    border-radius: 32px;
+    padding-left: 12px;
+  }
+  //.van-tabs{
+  //  font-size: half(28px);
+  //  /deep/ .van-tab--active{
+  //    color: #fc8a04;
+  //  }
+  //  /deep/ .van-tabs__line{
+  //    background-color: #fc8a04;
+  //  }
+  //}
+  .sortList{
     font-size: half(28px);
     /deep/ .van-tab--active{
-      color: #fc8a04;
+      color: #3f89ef;
     }
     /deep/ .van-tabs__line{
-      background-color: #fc8a04;
+      background-color: #3f89ef;
     }
-  }
-  .sortList{
-    margin-bottom: half(16px);
+    margin-bottom: half(-160px);
+    border-bottom: 1px solid #f0f0f0;
     @include clearfix;
-    height: half(120px);
-    line-height: half(120px);
+    height: half(80px);
+    line-height: half(80px);
     &-item{
       background: #fff;
       float: left;
@@ -30,16 +46,16 @@
       }
       .search{
         position: absolute;
-        top: half(54px);
+        top: half(36px);
         left: half(120px);
       }
       &.is-active{
-        color: #fc8a04;
+        color: #3f89ef;
       }
     }
     .price{
       .search{
-        top: half(48px);
+        top: half(28px);
       }
     }
   }

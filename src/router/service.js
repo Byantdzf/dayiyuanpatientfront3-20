@@ -12,7 +12,7 @@ export default [
         path: 'security',
         component: _import('service/security'),
         meta: {
-          title: '保安服务'
+          title: '医生列表'
         }
       },
       {
