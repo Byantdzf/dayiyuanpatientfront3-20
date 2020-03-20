@@ -4,7 +4,7 @@
       <img src="https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3118813608,3660597234&fm=26&gp=0.jpg">
       <div class="user-info">
         <span>陈不二</span>
-        <p style="font-size: 12px;color: white">查看并编辑个人信息</p>
+        <p style="font-size: 12px;color: white" @click="gotoPage('/user/setting')">查看并编辑个人信息</p>
 <!--        <van-rate :value='5' />-->
       </div>
 <!--      <router-link :to="{name:'mineSetting'}">-->
@@ -13,28 +13,37 @@
     </div>
 <!--    <div class="sub-nav">-->
 <!--      <subNavItem @click.native="goToMyOrder">-->
-<!--        <img src="./img/我的订单.png" slot="icon"> 我的订单-->
+<!--        我的订单-->
 <!--      </subNavItem>-->
 <!--      <subNavItem @click.native="goToMyOrder" :info='5'>-->
-<!--        <img src="./img/待服务.png" slot="icon"> 待服务-->
-<!--      </subNavItem>-->
-<!--      <subNavItem @click.native="goToMyOrder" :info='50'>-->
-<!--        <img src="./img/待评价.png" slot="icon"> 待评价-->
+<!--        待服务-->
 <!--      </subNavItem>-->
 <!--    </div>-->
-    <div class="list">
+    <div class="">
+      <div class="font16 inline-block text-center" style="width: 48%" @click="gotoPage('/user/consultOrders')">待支付问诊</div>
+      <div class="font16 inline-block text-center" style="width: 49%">待支付的药单</div>
+    </div>
+    <div class="list ff">
 <!--      <ul class="account-item">-->
 <!--        <li>1</li>-->
 <!--        <li>2</li>-->
 <!--        <li>3</li>-->
 <!--        <li>4</li>-->
 <!--      </ul>-->
-      <van-cell title="我的订单" icon='credit-pay' is-link></van-cell>
-      <van-cell title="我的病历" icon='credit-pay' is-link></van-cell>
-      <van-cell title="我的处方" icon='credit-pay' is-link></van-cell>
-      <van-cell title="患者信息" icon='credit-pay' is-link></van-cell>
-      <van-cell title="服务评价" icon='credit-pay' is-link></van-cell>
-      <van-cell title="用户反馈" icon='credit-pay' is-link></van-cell>
+      <div class="main-cell font14" @click="gotoPage('/user/consultOrders')">问诊订单</div>
+      <div class="main-cell font14" @click="gotoPage('/user/prescription')">我的处方</div>
+      <div class="main-cell font14" @click="gotoPage('/user/caseFile')">病例档案</div>
+      <div class="main-cell font14" @click="gotoPage('/user/patientsMsg')">患者信息</div>
+      <div class="main-cell font14" @click="gotoPage('/user/address')">我的地址</div>
+      <div class="main-cell font14" @click="gotoPage('/user/feedback')">用户反馈</div>
+      <div class="main-cell font14" @click="gotoPage('/user/bill')">关于我们</div>
+<!--      <van-cell title="问诊订单" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="我的处方" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="病例档案" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="患者信息" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="我的地址" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="用户反馈" icon='credit-pay' is-link></van-cell>-->
+<!--      <van-cell title="关于我们" icon='credit-pay' is-link></van-cell>-->
     </div>
   </div>
 </template>
@@ -59,6 +68,9 @@ export default {
   },
   created () {},
   methods: {
+    gotoPage (URL) {
+      this.$router.push({path: URL})
+    },
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
     }
@@ -66,4 +78,19 @@ export default {
 }
 </script>
 
-<style lang="scss" src='./index.scss'></style>
+<!--<style lang="scss" src='./index.scss'></style>-->
+
+<style lang="less">
+  @import '../../../../src/assets/style/reset';
+  body{
+    background:rgba(247,247,247,1);
+  }
+  .main-cell{
+    margin-left: 12px;
+    padding: 10px 12px 10px 0px;
+    border-bottom: 1px solid rgba(247,247,247,1);;
+  }
+  .dost{
+    border-bottom: 12px solid #e3e3e3;
+  }
+</style>

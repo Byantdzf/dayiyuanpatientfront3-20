@@ -20,18 +20,6 @@ export default [
             meta: {
               title: '我的'
             }
-          },
-          {
-            path: 'setting',
-            name: 'mineSetting',
-            component: _import('mine/setting'),
-            meta: { title: '个人信息' }
-          },
-          {
-            path: 'bill',
-            name: 'mineBill',
-            component: _import('mine/bill'),
-            meta: { title: '进出明细' }
           }
         ]
       }

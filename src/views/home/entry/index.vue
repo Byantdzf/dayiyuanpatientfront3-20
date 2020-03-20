@@ -7,34 +7,29 @@
  -->
 <template>
   <div class="entry">
-<!--    <div class="searchWrapper">-->
-<!--      <div class="selectbox">-->
-<!--        <router-link :to="{path: '/address/city-selected'}" tag="div">-->
-<!--          <label class="label">深圳</label>-->
-<!--          <i class="icon fa fa-angle-down"></i>-->
-<!--        </router-link>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--    <TheBanner></TheBanner>-->
-<!--    <Subnav></Subnav>-->
-<!--    <TheTodayOrder></TheTodayOrder>-->
     <div class="searchWrapper">
-      <van-search v-model="searchValue" @focus="focus" placeholder="搜索医院、疾病、医院" background=""></van-search>
+      <img src="../../../assets/image/homeIcon/search.png" class="icon" alt="">
+      <input type="text" placeholder="搜索医院、疾病、医院"  class="_input">
+<!--      <van-search v-model="searchValue" @focus="focus" placeholder="搜索医院、疾病、医院" background=""></van-search>-->
     </div>
+<!--     banna-->
     <div class="bannerWrapper">
       <img src="https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png" class="image" alt="">
     </div>
     <div class="tabWrapper">
-      <div class="itemTab text-center flo_l">
-        <img src="https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png" class="image" alt="">
-        <p class="font12">找专家</p>
-        <p class="colorbe font12 itemTitle">按疾病 医生 医院</p>
+      <div class="itemTab flo_l">
+        <div class="textBox inline-block">
+          <span class="font32 bold color3">找专家</span>
+          <p class="color9 font12 itemTitle">按疾病 医生 医院</p>
+        </div>
+        <img src="../../../assets/image/homeIcon/doctorIcon.png" class="image" alt="">
       </div>
-      <div class="itemTab text-center flo_l">
-        <img src="https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png" class="image" alt="">
-        <p class="font12">找专家</p>
-        <p class="colorbe font12 itemTitle">按疾病 医生 医院</p>
+      <div class="itemTab flo_r itemTabR">
+        <div class="textBox inline-block">
+          <span class="font32 bold color3">找专家</span>
+          <p class="color9 font12 itemTitle">按疾病 医生 医院</p>
+        </div>
+        <img src="../../../assets/image/homeIcon/drugIcon.png" class="image" alt="">
       </div>
     </div>
     <div class="titleWrapper" >
@@ -157,28 +152,61 @@ export default {
   }
   .entry{
     .searchWrapper{
-      margin: 16px;
+      /*margin: 16px;*/
+      /*border-radius: 32px;*/
+      /*overflow: hidden;*/
+      /*padding-left: 12px;*/
+      /*background: #f7f8fa;*/
+      margin: 30px;
+      background: #F6F6F6;
+      height: 68px;
       border-radius: 32px;
-      overflow: hidden;
-      padding-left: 12px;
-      background: #f7f8fa;
+      line-height: 68px;
+      .icon{
+        width: 22px;
+        height: 22px;
+        margin-left: 32px;
+        vertical-align: middle;
+      }
+      ._input{
+        background: none;
+        border: none;
+        margin-left: 8px;
+      }
     }
     .bannerWrapper{
-      margin: 16px;
+      margin: 30px;
       .image{
         width: 100%;
+        border-radius: 16px;
       }
     }
     .tabWrapper{
       overflow: hidden;
+      margin: 30px;
       .itemTab{
-        width: 50%;
+        width: 335px;
+        height: 145px;
+        background-image: url("../../../assets/image/homeIcon/tabBCB.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        .textBox{
+          margin: 28px 32px 0 40px;
+        }
         .image{
-          width: 40px;
-          height: 40px;
+          width: 68px;
+          /*height: 76px;*/
         }
         .itemTitle{
-          transform:scale(.9);
+          margin-top: 17px;
+        }
+      }
+      .itemTabR{
+        background-image: url("../../../assets/image/homeIcon/tabBCR.png");
+        .image{
+          width: 72px;
+          /*height: 68px;*/
+          margin-left: -4px;
         }
       }
       margin-bottom: 20px;

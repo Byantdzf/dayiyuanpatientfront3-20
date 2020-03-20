@@ -8,21 +8,21 @@
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.entry {
-  .body{
-    padding: 0 1.28rem /* 48/37.5 */;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #333b46;
-    .fa{
-      font-size: 1.28rem /* 48/37.5 */;
-    }
-    .desc{
-      font-size: .426667rem /* 16/37.5 */;
-    }
-  }
-}
-</style>
+<!--<style lang="scss" scoped>-->
+<!--.entry {-->
+<!--  .body{-->
+<!--    padding: 0 1.28rem /* 48/37.5 */;-->
+<!--    text-align: center;-->
+<!--    position: absolute;-->
+<!--    top: 50%;-->
+<!--    transform: translateY(-50%);-->
+<!--    color: #333b46;-->
+<!--    .fa{-->
+<!--      font-size: 1.28rem /* 48/37.5 */;-->
+<!--    }-->
+<!--    .desc{-->
+<!--      font-size: .426667rem /* 16/37.5 */;-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</style>-->
