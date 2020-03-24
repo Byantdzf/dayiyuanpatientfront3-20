@@ -1,17 +1,22 @@
 <template>
   <div class="listSearch">
     <div class="searchBox">
-      <van-search v-model="searchValue" placeholder="根据医院、疾病或科室搜索医生" show-action>
-        <div slot="action" @click="goBack">取消</div>
+      <van-search v-model="searchValue" placeholder="根据医院、疾病或科室搜索医生" style="background: #F5F5F5;width: 88%" class="flo_l">
       </van-search>
+      <div @click="goBack" style="color: #FF8A30;margin-top: 6px;" class="inline-block flo_r">取消</div>
     </div>
     <div class="hotSearch" v-if="!searchValue">
-      <p class="font12 color6">历史搜索</p>
-      <div class="clickBtn font10 text-center flo_l"  @click="search('深圳')">深圳</div>
+      <p class="font26 color9 flo_l">历史搜索</p>
+      <div class="mainDel flo_r">
+        <img src="@/assets/image/userIcon/deleteIcon.png" alt="">
+        <span class="font26">清空</span>
+      </div>
+      <p class="clearfloat"></p>
+      <div class="clickBtn color3 font22 text-center flo_l"  @click="search('深圳')">深圳</div>
     </div>
     <div class="hotSearch" v-if="!searchValue">
-      <p class="font12 color6">热门搜索</p>
-      <div class="clickBtn font10 text-center flo_l" v-for="(item,index) in hotList" :key="index" @click="search(item)">{{item}}</div>
+      <p class="font26 color9">热门搜索</p>
+      <div class="clickBtn color3 font22 text-center flo_l" v-for="(item,index) in hotList" :key="index" @click="search(item)">{{item}}</div>
     </div>
     <div class="doctorBox" v-if="searchValue">
       <DoctorList :list="list"></DoctorList>
@@ -73,8 +78,11 @@ export default {
   @import '../../../../src/assets/style/reset';
 
   .listSearch{
+    background: white;
+    min-height: 100vh;
+    padding: 30px;
     .searchBox{
-      margin: 16px;
+      overflow: hidden;
     }
   }
   .van-search__content{
@@ -82,15 +90,25 @@ export default {
     padding-left: 12px;
   }
   .hotSearch{
-    padding: 16px;
+    padding: 30px 0;
     overflow: hidden;
     padding-bottom: 0;
     .clickBtn{
-      background: #edeeef;
-      padding: 2px 12px;
-      border-radius: 14px;
-      margin: 12px 12px 10px 0;
+      background: #F5F5F5;
+      padding: 8px 42px;
+      border-radius: 22px;
+      margin: 22px 32px 22px 0;
     }
+  }
+
+  .mainDel {
+    img{
+      width: 28px;
+      height: 28px;
+      vertical-align: middle;
+      margin-bottom: 8px;
+    }
+    span{color: #b2b2b2}
   }
 
 </style>

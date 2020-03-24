@@ -16,6 +16,13 @@ export default [
         }
       },
       {
+        path: 'onlineConsult',
+        component: _import('service/onlineConsult'),
+        meta: {
+          title: '在线咨询'
+        }
+      },
+      {
         path: 'list-search',
         component: _import('service/list-search'),
         meta: {

@@ -7,67 +7,68 @@
  -->
 <template>
   <div class="entry">
-    <div class="searchWrapper">
-      <img src="../../../assets/image/homeIcon/search.png" class="icon" alt="">
-      <input type="text" placeholder="搜索医院、疾病、医院"  class="_input">
+    <div class="searchWrapper" @click="focus">
+      <img src="@/assets/image/homeIcon/search.png" class="icon" alt="">
+      <input type="text" placeholder="搜索医院、疾病、医院"  class="_input font26">
 <!--      <van-search v-model="searchValue" @focus="focus" placeholder="搜索医院、疾病、医院" background=""></van-search>-->
     </div>
 <!--     banna-->
     <div class="bannerWrapper">
       <img src="https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png" class="image" alt="">
     </div>
-    <div class="tabWrapper">
+    <div class="tabWrapper" @click="gotoPage('/service/security')">
       <div class="itemTab flo_l">
         <div class="textBox inline-block">
           <span class="font32 bold color3">找专家</span>
-          <p class="color9 font12 itemTitle">按疾病 医生 医院</p>
+          <p class="color9 font22 itemTitle">按疾病 医生 医院</p>
         </div>
-        <img src="../../../assets/image/homeIcon/doctorIcon.png" class="image" alt="">
+        <img src="@/assets/image/homeIcon/doctorIcon.png" class="image" alt="">
       </div>
       <div class="itemTab flo_r itemTabR">
         <div class="textBox inline-block">
-          <span class="font32 bold color3">找专家</span>
-          <p class="color9 font12 itemTitle">按疾病 医生 医院</p>
+          <span class="font32 bold color3">去开药</span>
+          <p class="color9 font22 itemTitle">按疾病 医生 医院</p>
         </div>
-        <img src="../../../assets/image/homeIcon/drugIcon.png" class="image" alt="">
+        <img src="@/assets/image/homeIcon/drugIcon.png" class="image" alt="">
       </div>
     </div>
     <div class="titleWrapper" >
-      <p class="title bold font16 flo_l">推荐科室</p>
-      <p class="font10 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
+      <p class="title bold font30 flo_l">推荐科室</p>
+      <p class="font28 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
     </div>
-    <div class="departmentBox">
+    <div class="departmentBox" @click="gotoPage('/service/security')">
       <div v-for="(item,index) in departments" :key="index" class="itemBox text-center flo_l">
         <img :src="item.icon" alt="" class="image">
-        <p class="font12 color6 title">{{item.title}}</p>
+        <p class="font24 color3 title">{{item.title}}</p>
       </div>
     </div>
     <div class="titleWrapper">
-      <p class="title bold font16 flo_l">推荐医生</p>
-      <p class="font10 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
+      <p class="title bold font30 flo_l">推荐医生</p>
+      <p class="font28 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
     </div>
     <div class="doctorBox">
       <DoctorList :list="list"></DoctorList>
-      <div class="btnBox font12 text-center">
-        <p class="text">更多此科室的医生</p>
-      </div>
+<!--      <div class="btnBox font12 text-center">-->
+<!--        <p class="text">更多此科室的医生</p>-->
+<!--      </div>-->
     </div>
     <div class="titleWrapper">
-      <p class="title bold font16 flo_l">专科联盟</p>
-      <p class="font10 colorbe flo_r more">更多</p>
+      <p class="title bold font30 flo_l">专科联盟</p>
+      <p class="font28 colorbe flo_r more">更多</p>
     </div>
-    <div class="unionWrapper">
-      <div class="itembBox flo_l text-center" v-for="(item,index) in unions" :key="index">
+    <div class="unionWrapper" @click="gotoLink('www.baidu.com')">
+      <div class="itembBox inline-block text-center" v-for="(item,index) in unions" :key="index">
         <img :src="item.photo" alt="" class="image">
-        <div class="font10">{{item.title}}</div>
-        <div class="clickBtn font10">进入</div>
+        <div class="font28 color3">{{item.title}}</div>
+        <div class="clickBtn font28">进入</div>
       </div>
     </div>
+    <div style="height: 100px;"></div>
   </div>
 </template>
 <script>
 // import TheBanner from './banner'
-import DoctorList from '../../../views/components/doctorList'
+import DoctorList from '@/views/components/doctorList'
 // import TheTodayOrder from './today-order'
 export default {
   components: {
@@ -81,19 +82,19 @@ export default {
       searchValue: '',
       departments: [
         {
-          icon: 'https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png',
+          icon: require('@/assets/image/homeIcon/tabIcon1.png'),
           title: '内科'
         },
         {
-          icon: 'https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png',
+          icon: require('@/assets/image/homeIcon/tabIcon2.png'),
           title: '整形外科'
         },
         {
-          icon: 'https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png',
+          icon: require('@/assets/image/homeIcon/tabIcon3.png'),
           title: '睡眠呼吸障碍专科'
         },
         {
-          icon: 'https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png',
+          icon: require('@/assets/image/homeIcon/tabIcon4.png'),
           title: '心血管内科'
         }
       ],
@@ -141,6 +142,10 @@ export default {
     },
     focus () {
       this.$router.push({path: '/service/list-search'})
+    },
+    gotoLink (url) {
+      // window.localtion.href = url
+      window.open(url, '_blank')
     }
   }
 }
@@ -151,13 +156,11 @@ export default {
     background: white;
   }
   .entry{
+    background: white;
+    margin: 0;
+    padding-top: 30px;
     .searchWrapper{
-      /*margin: 16px;*/
-      /*border-radius: 32px;*/
-      /*overflow: hidden;*/
-      /*padding-left: 12px;*/
-      /*background: #f7f8fa;*/
-      margin: 30px;
+      margin: 0 30px;
       background: #F6F6F6;
       height: 68px;
       border-radius: 32px;
@@ -191,14 +194,14 @@ export default {
         background-size: contain;
         background-repeat: no-repeat;
         .textBox{
-          margin: 28px 32px 0 40px;
+          margin: 28px 28px 0 32px;
         }
         .image{
           width: 68px;
           /*height: 76px;*/
         }
         .itemTitle{
-          margin-top: 17px;
+          margin-top: 14px;
         }
       }
       .itemTabR{
@@ -212,34 +215,35 @@ export default {
       margin-bottom: 20px;
     }
     .titleWrapper{
-      margin: 16px;
+      margin: 30px 16px;
       overflow: hidden;
       .title{
-        padding-left: 12px;
+        padding-left: 34px;
         position: relative;
         &:before{
           content: '';
-          left: 0;
-          top: 5px;
-          width: 2px;
-          height: 14px;
+          left: 16px;
+          top: 6px;
+          width: 6px;
+          height: 28px;
           position: absolute;
-          background: #6792d2;
+          background: #00BD75;
         }
       }
       .more{
         margin-top: 8px;
-        padding-right: 14px;
+        padding-right: 34px;
         position: relative;
         &:before{
           content: '';
-          right: -4px;
-          top: -1px;
-          width: 20px;
-          height: 20px;
+          right: 16px;
+          top: 14px;
+          width: 9px;
+          height: 16px;
           position: absolute;
-          background-image: url("https://images.ufutx.com/202002/24/358000854fe0ad24249b85f64640f9a4.png");
+          background-image: url('../../../assets/image/homeIcon/rightIcon.png');
           background-size: contain;
+          background-repeat: no-repeat;
         }
       }
     }
@@ -249,9 +253,13 @@ export default {
       .itemBox{
         width: 25%;
         .image{
-          width: 42px;
-          height: 42px;
+          width: 80px;
+          height: 80px;
         }
+      }
+      .title{
+        width: 120px;
+        margin: auto;
       }
     }
     .doctorBox{
@@ -285,26 +293,30 @@ export default {
       }
     }
     .unionWrapper{
-      overflow: hidden;
-      padding: 16px;
+      /*overflow: hidden;*/
+      padding: 0 30px;
       .itembBox{
-        width: 30%;
+        width: 240px;
+        height: 344px;
         box-shadow: 1px 1px 12px #e2e2e2;
-        margin-right: 12px;
+        margin-right: 22px;
         border-radius: 12px;
-        padding: 12px 0;
         .image{
-          width: 50px;
-          height: 50px;
+          width: 120px;
+          height: 120px;
           border-radius: 50%;
-          margin-bottom: 4px;
+          margin-top: 40px;
+          margin-bottom: 26px;
         }
         .clickBtn{
-          background: #608ef2;
-          width: 60px;
-          border-radius: 10px;
-          color: white;
-          margin: 12px auto 4px;
+          width: 160px;
+          height: 58px;
+          line-height: 58px;
+          border-radius: 32px;
+          color: #00BD75;
+          margin: auto;
+          margin-top: 36px;
+          border: 1px solid #00BD75;
         }
       }
     }

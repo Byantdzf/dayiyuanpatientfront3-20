@@ -14,6 +14,12 @@ export default [
         },
         children: [
           {
+            path: 'register',
+            name: 'mineRegister',
+            component: _import('user/register'),
+            meta: { title: '注册' }
+          },
+          {
             path: 'setting',
             name: 'mineSetting',
             component: _import('user/setting'),
@@ -32,16 +38,34 @@ export default [
             meta: { title: '我的处方' }
           },
           {
+            path: 'prescriptionDetail',
+            name: 'minePrescriptionDetail',
+            component: _import('user/prescriptionDetail'),
+            meta: { title: '处方详情' }
+          },
+          {
             path: 'caseFile',
             name: 'mineCaseFile',
             component: _import('user/caseFile'),
             meta: { title: '病例档案' }
           },
           {
+            path: 'addCaseFile',
+            name: 'mineAddCaseFile',
+            component: _import('user/addCaseFile'),
+            meta: { title: '新增病例' }
+          },
+          {
             path: 'patientsMsg',
             name: 'minePatientsMsg',
             component: _import('user/patientsMsg'),
             meta: { title: '患者信息' }
+          },
+          {
+            path: 'addPatientsMsg',
+            name: 'mineAddPatientsMsg',
+            component: _import('user/addPatientsMsg'),
+            meta: { title: '新增患者' }
           },
           {
             path: 'address',

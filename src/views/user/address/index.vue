@@ -3,22 +3,22 @@
     <div class="main-address">
       <div class="addressItem" v-for="(item,index) in addressList" :key="index">
         <div class="addressStyle flo_l">
-          <span class="theme_bc colorff font10 active" v-if="item.active">默认</span>
-          <span class="font14 bold">{{item.name}}</span>
-          <span class="font14 bold">{{item.mobile}}</span>
-          <p class="font14 addressText color6">
+          <p class="theme_bc colorff font20 active inline-block" v-if="item.active">默认</p>
+          <p class="font30 color3 bold inline-block">{{item.name}}</p>
+          <p class="font28 color3 bold mobile inline-block">{{item.mobile}}</p>
+          <p class="font28 addressText color6">
             {{item.address}}
           </p>
         </div>
         <div class="addressEdit flo_l">
-          <img src="../../../assets/image/otherIcon/edit.png" alt="">
+          <img src="@/assets/image/otherIcon/edit.png" alt="">
         </div>
         <p class="clearfloat"></p>
       </div>
       <div class="addAddress text-center" @click="gotoPage('/user/addAddress')">
         <!--      <div>-->
-        <img src="../../../assets/image/otherIcon/add.png" class="" alt="">
-        <div class="colorTheme bold inline-block text ">新建地址</div>
+        <img src="@/assets/image/otherIcon/add.png" class="" alt="">
+        <div class="colorTheme bold inline-block text font32">新建地址</div>
         <p class="clearfloat"></p>
         <!--      </div>-->
       </div>
@@ -51,66 +51,69 @@ export default {
 <!--<style lang='scss' src='index.scss'></style>-->
 <style lang="less" scoped>
   @import '../../../../src/assets/style/reset';
-  body{
+  #mineAddress{
+    min-height: 100vh;
     background: #F2F2F2;
   }
   .main-address{
     background: white;
     .addressItem{
       margin-left: 32px;
-      padding-bottom: 10px;
       border-bottom: 1px solid #EEEEEE;
-      padding-top: 10px;
+      padding: 30px 0;
       .addressStyle{
         width: 82%;
-        margin-top: -12px;
-        margin-left: -14px;
+        .mobile{
+          margin-left: 40px;
+        }
         .active{
-          padding: 1px 6px;
-          border-radius: 3px;
+          padding: 2px 16px;
+          margin-right: 17px;
+          margin-bottom: 10px;
+          border-radius: 4px;
+          vertical-align: middle;
+          border: none;
+          margin-top: -1px;
         }
         .addressText{
+          margin-top: 16px;
         }
       }
       .addressEdit{
-        margin-top: 20px;
-        padding-left: 36px;
+        padding-left: 50px;
         position: relative;
         &:before{
           content: '';
           left: 16px;
-          top: 16px;
+          top: 46px;
           width: 1px;
-          height: 36px;
+          height: 68px;
           position: absolute;
           background: #D8D8D8;
         }
 
         img{
-          width: 20px;
-          height: 20px;
+          width: 34px;
+          height: 34px;
+          margin-top: 62px;
         }
       }
     }
     .addAddress{
       width: 100%;
-      height: 40px;
+      height: 100px;
       background: white;
       position: fixed;
       bottom: 0;
       left: 0;
-      line-height: 40px;
-      padding-bottom: 12px;
+      line-height: 100px;
       img{
-        width: 16px;
-        height: 16px;
+        width: 34px;
+        height: 34px;
         vertical-align:middle;
-        margin-top: 8px;
-        margin-right: -4px;
+        margin-bottom: 6px;
       }
       .text{
-        font-size: 15px;
-        margin-top: -12px;
       }
     }
   }

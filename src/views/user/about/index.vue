@@ -1,5 +1,5 @@
 <template>
-  <div class="title theme_bc">关于我们</div>
+  <div class="title theme_bc text-center colorff mainBox">关于我们</div>
 </template>
 
 <script>
@@ -24,5 +24,8 @@ export default {
   }
   .dost{
     border-bottom: 12px solid #e3e3e3;
+  }
+  .mainBox{
+    padding: 12px;
   }
 </style>
