@@ -40,7 +40,7 @@
         </li>
       </ul>
     </div>
-    <div class="color3 font26 moreBtn text-center bold">更多全部评价></div>
+    <div class="color3 font26 moreBtn text-center bold" @click="gotoPage('/service/allComments')">更多全部评价></div>
   </div>
 </template>
 <script>
@@ -48,6 +48,14 @@ export default {
   data () {
     return {
       rateValue: 3
+    }
+  },
+  methods: {
+    gotoPage (URL) {
+      this.$router.push({path: URL})
+    },
+    goToMyOrder (name) {
+      this.$router.push({ name: name })
     }
   }
 }

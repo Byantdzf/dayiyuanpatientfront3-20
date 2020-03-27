@@ -7,7 +7,7 @@
     </van-tabs>
     <template name="list">
       <div  v-for="(item,index) in list" :key="index">
-        <div class="wrapper ff" @click="gotoPage">
+        <div class="wrapper ff" @click="gotoPage('/user/consultOrderDetail')">
           <div class="listItem">
             <div class="flo_l">
               <img :src="item.photo" class="image" alt="">
@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     gotoPage (URL) {
+      console.log(URL)
       this.$router.push({path: URL})
     },
     goToMyOrder () {

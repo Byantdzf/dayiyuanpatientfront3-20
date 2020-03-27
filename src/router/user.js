@@ -32,6 +32,12 @@ export default [
             meta: { title: '咨询订单' }
           },
           {
+            path: 'consultOrderDetail',
+            name: 'mineConsultOrderDetail',
+            component: _import('user/consultOrderDetail'),
+            meta: { title: '咨询订单详情' }
+          },
+          {
             path: 'prescription',
             name: 'minePrescription',
             component: _import('user/prescription'),

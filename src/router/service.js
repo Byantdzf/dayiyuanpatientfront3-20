@@ -35,6 +35,13 @@ export default [
         meta: {
           title: '服务详情'
         }
+      },
+      {
+        path: 'allComments',
+        component: _import('service/allComments'),
+        meta: {
+          title: '全部评价'
+        }
       }
     ]
   }
