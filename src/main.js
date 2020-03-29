@@ -1,10 +1,3 @@
-/*
- * @Author: WangQiBiao
- * @LastEditors: WangQiBiao
- * @Description: 入口
- * @Date: 2019-03-31 13:41:09
- * @LastEditTime: 2019-04-07 22:48:38
- */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import 'vant/lib/index.css'
@@ -21,6 +14,10 @@ import Vue from 'vue'
 import components from './components'
 import router from './router'
 import store from './store'
+import axios from 'axios'
+import qs from 'qs'
+Vue.prototype.qs = qs
+Vue.prototype.$axios = axios
 
 Vue.use(Vant)
 

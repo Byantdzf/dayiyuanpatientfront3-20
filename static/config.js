@@ -1,10 +1,4 @@
-/*
- * @Author: WangQiBiao
- * @LastEditors: WangQiBiao
- * @Description: 
- * @Date: 2019-03-31 13:41:09
- * @LastEditTime: 2019-03-31 13:46:39
- */
+
 /* eslint-disable */
 /**
  * 配置信息
@@ -19,7 +13,7 @@
  */
 var PLATFORM_CONFIG = {};
 //数据有关
-PLATFORM_CONFIG.baseUrl = 'http://xxx.xxx.x.xx:xxxx/partner/';
+PLATFORM_CONFIG.baseUrl = 'http://47.115.54.185:8080/p/';
 PLATFORM_CONFIG.dataUrl = PLATFORM_CONFIG.baseUrl + 'data';
 PLATFORM_CONFIG.downloadUrl = PLATFORM_CONFIG.baseUrl + 'downClient';
 PLATFORM_CONFIG.uploadUrl = PLATFORM_CONFIG.baseUrl + 'upClient';

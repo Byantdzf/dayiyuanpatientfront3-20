@@ -1,10 +1,3 @@
-<!--
- * @Author: WangQiBiao
- * @LastEditors: WangQiBiao
- * @Description:
- * @Date: 2019-03-31 13:41:09
- * @LastEditTime: 2019-03-31 14:00:09
- -->
 <template>
   <div id="OrderList">
     <van-tabs v-model="currentStatus" sticky>

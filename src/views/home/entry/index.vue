@@ -69,6 +69,7 @@
 <script>
 // import TheBanner from './banner'
 import DoctorList from '@/views/components/doctorList'
+import https from '@/config/http.js'
 // import TheTodayOrder from './today-order'
 export default {
   components: {
@@ -144,9 +145,18 @@ export default {
       this.$router.push({path: '/service/list-search'})
     },
     gotoLink (url) {
-      // window.localtion.href = url
       window.open(url, '_blank')
+    },
+    getData () {
+      https.fetchGet('index/list').then((data) => {
+        console.log(data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
