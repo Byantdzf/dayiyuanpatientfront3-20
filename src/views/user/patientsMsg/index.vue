@@ -1,13 +1,13 @@
 <template>
   <div class="mainPage">
     <div class="main-list">
-      <div class="listItem">
+      <div class="listItem" v-for="(item,index) in list" :key="index">
         <div class="font28 color3 flo_l title">
-          <p class="flo_l">李四</p>
-          <div class="active text-center font22 colorff flo_l">默认</div>
+          <p class="flo_l">{{item.patientName}}</p>
+          <div class="active text-center font22 colorff flo_l" v-if="item.isDefault">默认</div>
         </div>
         <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-        <p class="color6 font28 flo_r title">20岁（男）</p>
+        <p class="color6 font28 flo_r title">{{item.age}}岁（{{item.sex == 1?'男':'女'}}）</p>
         <p class="clearfloat"></p>
       </div>
     </div>
@@ -18,12 +18,14 @@
 </template>
 
 <script>
+import https from '@/config/http.js'
 export default {
   data () {
     return {
       text: '',
       value: '',
       showPicker: false,
+      list: [],
       columns: ['测试', '测试', '测试', '测试', '测试']
     }
   },
@@ -34,7 +36,18 @@ export default {
     onConfirm (value) {
       this.value = value
       this.showPicker = false
+    },
+    getData () {
+      https.fetchGet('patient/queryPatientList').then((data) => {
+        console.log(data)
+        this.list = data
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

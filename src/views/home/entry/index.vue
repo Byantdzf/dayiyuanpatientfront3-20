@@ -14,7 +14,7 @@
     </div>
 <!--     banna-->
     <div class="bannerWrapper">
-      <img src="https://images.ufutx.com/202002/24/dfb8a4570b8262ad64a7e2743f018716.png" class="image" alt="">
+      <img :src="listBanner[0].imgUrl" class="image" alt="">
     </div>
     <div class="tabWrapper" @click="gotoPage('/service/security')">
       <div class="itemTab flo_l">
@@ -37,9 +37,9 @@
       <p class="font28 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
     </div>
     <div class="departmentBox" @click="gotoPage('/service/security')">
-      <div v-for="(item,index) in departments" :key="index" class="itemBox text-center flo_l">
+      <div v-for="(item,index) in listDepts" :key="index" class="itemBox text-center flo_l">
         <img :src="item.icon" alt="" class="image">
-        <p class="font24 color3 title">{{item.title}}</p>
+        <p class="font24 color3 title">{{item.deptName}}</p>
       </div>
     </div>
     <div class="titleWrapper">
@@ -47,7 +47,7 @@
       <p class="font28 colorbe flo_r more" @click="gotoPage('/service/security')">更多</p>
     </div>
     <div class="doctorBox">
-      <DoctorList :list="list"></DoctorList>
+      <DoctorList :list="listOrgDoctor"></DoctorList>
 <!--      <div class="btnBox font12 text-center">-->
 <!--        <p class="text">更多此科室的医生</p>-->
 <!--      </div>-->
@@ -57,9 +57,9 @@
       <p class="font28 colorbe flo_r more">更多</p>
     </div>
     <div class="unionWrapper" @click="gotoLink('www.baidu.com')">
-      <div class="itembBox inline-block text-center" v-for="(item,index) in unions" :key="index">
-        <img :src="item.photo" alt="" class="image">
-        <div class="font28 color3">{{item.title}}</div>
+      <div class="itembBox inline-block text-center" v-for="(item,index) in listOrg" :key="index">
+        <img :src="item.icon" alt="" class="image">
+        <div class="font28 color3">{{item.orgName}}</div>
         <div class="clickBtn font28">进入</div>
       </div>
     </div>
@@ -67,20 +67,20 @@
   </div>
 </template>
 <script>
-// import TheBanner from './banner'
 import DoctorList from '@/views/components/doctorList'
 import https from '@/config/http.js'
-// import TheTodayOrder from './today-order'
 export default {
   components: {
-    // TheBanner,
-    // Subnav,
     DoctorList
   },
   data () {
     return {
       address: '',
       searchValue: '',
+      listOrgDoctor: [],
+      listDepts: [],
+      listBanner: [],
+      listOrg: [],
       departments: [
         {
           icon: require('@/assets/image/homeIcon/tabIcon1.png'),
@@ -150,6 +150,11 @@ export default {
     getData () {
       https.fetchGet('index/list').then((data) => {
         console.log(data)
+        let {listOrgDoctor, listDepts, listBanner, listOrg} = data
+        this.listOrgDoctor = listOrgDoctor
+        this.listDepts = listDepts
+        this.listBanner = listBanner
+        this.listOrg = listOrg
       }).catch(err => {
         console.log(err)
       })
