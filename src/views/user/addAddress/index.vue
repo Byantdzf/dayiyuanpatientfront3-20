@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import https from '@/config/http.js'
 export default {
   data () {
     return {
@@ -42,6 +43,25 @@ export default {
         {name: '汤小姐', address: '广东省深圳市宝安区公园路西一巷24号中州府二期11A架空城中级e', mobile: '15820462342', active: false}
       ]
     }
+  },
+  methods: {
+    gotoPage (URL) {
+      this.$router.push({path: URL})
+    },
+    goToMyOrder () {
+      this.$router.push({ name: 'OrderList' })
+    },
+    getData () {
+      https.fetchGet('address/list').then((data) => {
+        console.log(data)
+        this.addressList = data
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

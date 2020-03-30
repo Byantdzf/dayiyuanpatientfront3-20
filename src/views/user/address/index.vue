@@ -3,11 +3,14 @@
     <div class="main-address">
       <div class="addressItem" v-for="(item,index) in addressList" :key="index">
         <div class="addressStyle flo_l">
-          <p class="theme_bc colorff font20 active inline-block" v-if="item.active">默认</p>
-          <p class="font30 color3 bold inline-block">{{item.name}}</p>
+          <p class="theme_bc colorff font20 active inline-block" v-if="item.commonAddr">默认</p>
+          <p class="font30 color3 bold inline-block">{{item.receiver}}</p>
           <p class="font28 color3 bold mobile inline-block">{{item.mobile}}</p>
           <p class="font28 addressText color6">
-            {{item.address}}
+            {{item.province}}
+            {{item.city}}
+            {{item.area}}
+            {{item.addr}}
           </p>
         </div>
         <div class="addressEdit flo_l">
@@ -27,15 +30,11 @@
 </template>
 
 <script>
+import https from '@/config/http.js'
 export default {
   data () {
     return {
-      addressList: [
-        {name: '汤小姐', address: '广东省深圳市宝安区公园路西一巷24号中州府二期11A架空城中级e', mobile: '15820462342', active: true},
-        {name: '汤小姐', address: '广东省深圳市宝安区公园路西一巷24号中州府二期11A架空城中级e', mobile: '15820462342', active: false},
-        {name: '汤小姐', address: '广东省深圳市宝安区公园路西一巷24号中州府二期11A架空城中级e', mobile: '15820462342', active: false},
-        {name: '汤小姐', address: '广东省深圳市宝安区公园路西一巷24号中州府二期11A架空城中级e', mobile: '15820462342', active: false}
-      ]
+      addressList: []
     }
   },
   methods: {
@@ -44,7 +43,18 @@ export default {
     },
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
+    },
+    getData () {
+      https.fetchGet('address/list').then((data) => {
+        console.log(data)
+        this.addressList = data
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div id="mineEntry">
     <div class="avatar-wrapper">
-      <img src="https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3118813608,3660597234&fm=26&gp=0.jpg" class="img flo_l">
+      <img :src="userInfo.pic" class="img flo_l">
       <div class="user-info flo_l">
-        <p class="colorff font32">陈不二</p>
+        <p class="colorff font32">{{userInfo.nickName}}</p>
         <p class="colorff font26 _msg"  @click="gotoPage('/user/setting')">查看并编辑个人信息</p>
       </div>
       <p class="clearfloat"></p>
@@ -35,10 +35,12 @@
 </template>
 
 <script>
+import https from '@/config/http.js'
 export default {
   components: {},
   data () {
     return {
+      userInfo: {},
       listItem: [
         {title: '问诊订单', page: '/user/consultOrders', icon: require('@/assets/image/userIcon/itemIcon1.png')},
         {title: '我的处方', page: '/user/prescription', icon: require('@/assets/image/userIcon/itemIcon2.png')},
@@ -58,7 +60,18 @@ export default {
     },
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
+    },
+    getData () {
+      https.fetchGet('user/userDetial').then((data) => {
+        console.log(data)
+        this.userInfo = data
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
