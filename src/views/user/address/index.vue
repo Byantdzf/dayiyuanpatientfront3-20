@@ -1,7 +1,7 @@
 <template>
   <div id="mineAddress">
     <div class="main-address">
-      <div class="addressItem" v-for="(item,index) in addressList" :key="index">
+      <div class="addressItem" v-for="(item,index) in addressList" :key="index"  @click="gotoPage(`/user/addAddress?id=${item.addrId}`)">
         <div class="addressStyle flo_l">
           <p class="theme_bc colorff font20 active inline-block" v-if="item.commonAddr">默认</p>
           <p class="font30 color3 bold inline-block">{{item.receiver}}</p>
@@ -59,7 +59,7 @@ export default {
 }
 </script>
 <!--<style lang='scss' src='index.scss'></style>-->
-<style lang="less" scoped>
+<style lang="less" scoped="scoped">
   @import '../../../../src/assets/style/reset';
   #mineAddress{
     min-height: 100vh;

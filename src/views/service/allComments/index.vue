@@ -20,21 +20,19 @@
         <img src="@/assets/image/serviceIcon/downIcon.png" width="15" height="7" alt="">
       </div>
     </div>
-    <div class="listsWrapper"  v-for="(item,index) in 3" :key="index">
+    <div class="listsWrapper"  v-for="(item,index) in list" :key="index">
       <ul class="lists" >
         <li class="lists-item">
           <div class="label">
-            <div class="name color3 font28 flo_l">吴***达</div>
-            <!--            <div class="ratelist">-->
-            <van-rate v-model="rateValue" :size="14" class="flo_l" style="margin-top: 3px;margin-left: 8px"/>
-            <!--            </div>-->
+            <div class="name color3 font28 flo_l">{{item.anoName}}</div>
+            <van-rate v-model="item.score" :size="14" icon="https://images.ufutx.com/202004/06/48867762c1ac535d64dfc7fd13001976.png" class="flo_l" style="margin-top: 3px;margin-left: 4px;"/>
             <p class="clearfloat"></p>
-            <p class="font26 color9">经验丰富/解答透彻/热情亲切/</p>
+            <p class="font26 color9">{{item.lables}}</p>
           </div>
-          <div class="desc font30 color3">毕竟是大医院的医生，让家长很安心，知道建议很 科学。</div>
+          <div class="desc font30 color3">{{item.content}}</div>
           <div style="padding-right: 8px;">
-            <span class="colorb font26">[图文问诊]</span>
-            <span class="colorb font26 flo_r">2020.02.02</span>
+            <span class="colorb font26">[{{item.source}}]</span>
+            <span class="colorb font26 flo_r">{{item.recTime}}</span>
           </div>
         </li>
       </ul>
@@ -49,11 +47,14 @@ export default {
       checked: true,
       text: '',
       rateValue: 2,
+      list: [],
+      id: 0,
       fileList: [
         { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         { url: 'https://cloud-image', isImage: true }
+      //  /comment/queryCommPage?doctorId=1&pageNo=1&pageSize=10
       ]
     }
   },
@@ -63,7 +64,24 @@ export default {
     },
     goToMyOrder (name) {
       this.$router.push({ name: name })
+    },
+    getData () {
+      let data = {
+        doctorId: 1,
+        pageNo: 1,
+        pageSize: 10
+      }
+      this.$https.fetchGet('comment/queryCommPage', data).then((data) => {
+        this.list = data.result
+        console.log(this.list)
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.id = this.$route.query.id
+    this.getData()
   }
 }
 </script>

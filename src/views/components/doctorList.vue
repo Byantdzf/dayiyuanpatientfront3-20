@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item,index) in list" :key="index" class="wrapper" @click="gotoPage">
+    <div v-for="(item,index) in list" :key="index" class="wrapper" @click="gotoPage(`/service/details?id=${item.deptId}`)">
       <div class="flo_l">
         <img :src="item.avatar" class="image" alt="">
       </div>
@@ -8,7 +8,7 @@
         <p class="font30 color3 bold name">{{item.doctorName}} <span class="post">{{item.title}}</span></p>
         <p class="font24 color6 title">{{item.title}}</p>
         <p class="font24 ellipsis_1 color9 title">擅长：{{item.speciality}}</p>
-        <p class="font20 label flo_l">{{item.character}}</p>
+        <p class="font20 label flo_l" v-if="item.character">{{item.character}}</p>
       </div>
       <div class="_dotv flo_l" v-if="index != list.length"></div>
     </div>
@@ -24,8 +24,8 @@ export default {
     }
   },
   methods: {
-    gotoPage () {
-      this.$router.push({path: '/service/details'})
+    gotoPage (URL) {
+      this.$router.push({path: URL})
     }
     // hideModal () {
     //   this.$emit('hideModal', false)

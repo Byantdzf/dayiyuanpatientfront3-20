@@ -3,9 +3,9 @@
     <div class="infoWrapper">
       <div class="info">
         <div class="color3 font30 title">客户评价
-          <span class="numm">(88)</span>
+          <span class="numm">({{comm_count}})</span>
           <span class="color9 font26">含开药门诊</span>
-          <p class="font26 flo_r" style="color: #F9941F">好评率 100% ></p>
+          <p class="font26 flo_r" style="color: #F9941F">好评率 {{praisePecent*100}}% ></p>
         </div>
 <!--        <div class="desc">-->
 <!--          <span class="name">查看详情</span>-->
@@ -13,38 +13,31 @@
 <!--        </div>-->
       </div>
       <ul class="search">
-<!--        <li class="search-item is-active">全部</li>-->
-        <li class="search-item font24 color6">确认速度快</li>
-        <li class="search-item font24 color6">打扫很干净</li>
-        <li class="search-item font24 color6">沟通顺畅</li>
-        <li class="search-item font24 color6">态度好</li>
-        <li class="search-item font24 color6">态度好</li>
-        <li class="search-item font24 color6">态度好</li>
+        <li class="search-item font24 color6" v-for="(item,index) in listLbl" :key="index">{{item.lable_name}}({{item.count}})</li>
       </ul>
     </div>
-    <div class="listsWrapper"  v-for="(item,index) in 3" :key="index">
+    <div class="listsWrapper"  v-for="(item,index) in listComment" :key="index">
       <ul class="lists" >
         <li class="lists-item">
           <div class="label">
-            <div class="name color3 font28 flo_l">吴***达</div>
-<!--            <div class="ratelist">-->
-              <van-rate v-model="rateValue" :size="14" class="flo_l" style="margin-bottom: -4px;"/>
-<!--            </div>-->
+            <div class="name color3 font28 flo_l">{{item.anoName}}</div>
+            <van-rate v-model="item.score" :size="14" icon="https://images.ufutx.com/202004/06/48867762c1ac535d64dfc7fd13001976.png" class="flo_l" style="margin-top: 3px;margin-left: 4px;"/>
             <p class="clearfloat"></p>
           </div>
-          <div class="desc font30 color3">毕竟是大医院的医生，让家长很安心，知道建议很 科学。</div>
+          <div class="desc font30 color3">{{item.content}}</div>
           <div style="padding-right: 8px;">
-            <span class="colorb font26">[图文问诊]</span>
-            <span class="colorb font26 flo_r">2020.02.02</span>
+            <span class="colorb font26">[{{item.source}}]</span>
+            <span class="colorb font26 flo_r">{{item.recTime}}</span>
           </div>
         </li>
       </ul>
     </div>
-    <div class="color3 font26 moreBtn text-center bold" @click="gotoPage('/service/allComments')">更多全部评价></div>
+    <div class="color3 font26 moreBtn text-center bold" @click="gotoPage(`/service/allComments?id={id}`)">更多全部评价></div>
   </div>
 </template>
 <script>
 export default {
+  props: ['listLbl', 'listComment', 'comm_count', 'id', 'praisePecent'],
   data () {
     return {
       rateValue: 3

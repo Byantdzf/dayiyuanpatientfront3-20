@@ -14,17 +14,18 @@
     </div>
 <!--     banna-->
     <div class="bannerWrapper">
-      <img :src="listBanner[0].imgUrl" class="image" alt="">
+<!--      <img :src="listBanner[0].imgUrl" class="image" alt="">-->
+      <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=412362369,2838870680&fm=26&gp=0.jpg" class="image" alt="">
     </div>
-    <div class="tabWrapper" @click="gotoPage('/service/security')">
-      <div class="itemTab flo_l">
+    <div class="tabWrapper">
+      <div class="itemTab flo_l" @click="gotoPage('/service/security')">
         <div class="textBox inline-block">
           <span class="font32 bold color3">找专家</span>
           <p class="color9 font22 itemTitle">按疾病 医生 医院</p>
         </div>
         <img src="@/assets/image/homeIcon/doctorIcon.png" class="image" alt="">
       </div>
-      <div class="itemTab flo_r itemTabR">
+      <div class="itemTab flo_r itemTabR" @click="showToast">
         <div class="textBox inline-block">
           <span class="font32 bold color3">去开药</span>
           <p class="color9 font22 itemTitle">按疾病 医生 医院</p>
@@ -69,6 +70,7 @@
 <script>
 import DoctorList from '@/views/components/doctorList'
 import https from '@/config/http.js'
+import { Toast } from 'vant'
 export default {
   components: {
     DoctorList
@@ -138,6 +140,9 @@ export default {
     }
   },
   methods: {
+    showToast () {
+      Toast('该功能正在维护中，敬请期待')
+    },
     gotoPage (URL) {
       this.$router.push({path: URL})
     },

@@ -1,37 +1,43 @@
 <template>
   <div>
     <van-tabs v-model="activeName" color="#00BD75" style="border-bottom: 1px solid #D6D6D6;">
-      <van-tab :title="item" name="a" v-for="(item,index) in tabs" color="#00BD75" :key="index">
+      <van-tab :title="item" v-for="(item,index) in tabs" color="#00BD75" :key="index">
         <template is="list"></template>
       </van-tab>
     </van-tabs>
     <template name="list">
-      <div  v-for="(item,index) in list" :key="index">
-        <div class="wrapper ff" @click="gotoPage('/user/consultOrderDetail')">
-          <div class="listItem">
-            <div class="flo_l">
-              <img :src="item.photo" class="image" alt="">
+      <div v-if="list.length>0">
+        <div  v-for="(item,index) in list" :key="index">
+          <div class="wrapper ff" @click="gotoPage('/user/consultOrderDetail')">
+            <div class="listItem">
+              <div class="flo_l">
+                <img :src="item.avatar" class="image" alt="">
+              </div>
+              <div class="flo_l content text-left ">
+                <p class="font30 color3 bold name inline-block">{{item.doctorName}}</p>
+                <p class="font24 label inline-block text-center">图文问诊</p>
+                <p class="colorTheme font26 flo_r bold">{{item.statusText}}</p>
+                <p class="font26 color6 title">{{item.title}}</p>
+                <p class="font26 color9 title ellipsis_2">擅长：{{item.speciality}}</p>
+                <p style="margin-top: 22px;">
+                <p class="font26 color9 title flo_l">就诊人：李四 30(男)</p>
+                <p class="font24 color9 title flo_r">2020.02.22 13.34</p>
+              </div>
+              <div class="_dotV flo_r" ></div>
+              <div class="flo_l content contentV  text-left">
+                <p class="btnStyle font26 colorff text-center flo_r">{{item.FnText}}</p>
+                <p class="btnStyle cancel font26 color3 text-center flo_r" v-if="item.FnText">取消</p>
+              </div>
+              <p class="clearfloat"></p>
             </div>
-            <div class="flo_l content text-left ">
-              <p class="font30 color3 bold name inline-block">{{item.name}}</p>
-              <p class="font24 label inline-block text-center">图文问诊</p>
-              <p class="colorTheme font26 flo_r bold">待接诊</p>
-              <p class="font26 color6 title">{{item.title}}</p>
-              <p class="font26 color9 title">擅长：{{item.skill}}</p>
-              <p style="margin-top: 22px;">
-              <p class="font26 color9 title flo_l">就诊人：李四 30(男)</p>
-              <p class="font24 color9 title flo_r">2020.02.22 13.34</p>
-            </div>
-            <div class="_dotV flo_r" ></div>
-            <div class="flo_l content contentV  text-left">
-              <p class="btnStyle font26 colorff text-center flo_r">去支付</p>
-              <p class="btnStyle cancel font26 color3 text-center flo_r">取消</p>
-            </div>
-            <p class="clearfloat"></p>
           </div>
+          <div class="_dot" v-if="index != list.length"></div>
+          <p class="clearfloat"></p>
         </div>
-        <div class="_dot" v-if="index != list.length"></div>
-        <p class="clearfloat"></p>
+      </div>
+      <div v-else class="noneDataIcon">
+        <img src="../../../assets/image/pic_noneData.png" alt="">
+        <p class="color9 font30">暂无内容</p>
       </div>
     </template>
   </div>
@@ -41,26 +47,19 @@
 export default {
   data () {
     return {
+      status: 0,
+      FnText: '',
+      statusText: '',
       activeName: 'a',
-      tabs: ['全部', '待支付', '待接诊', '已支付', '已取消'],
-      list: [
-        {
-          photo: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3072212054,4223657569&fm=11&gp=0.jpg',
-          title: '北京医院 内科',
-          name: '国红 主任医师',
-          skill: '脑血管, 头疼, 头晕, 睡眠障碍, 高血压, 支气管哮喘',
-          labels: ['可开处方'],
-          value: 3
-        },
-        {
-          photo: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1036745067,4011189473&fm=26&gp=0.jpg',
-          title: '北京医院 内科',
-          name: '国红 主任医师',
-          skill: '脑血管, 头疼, 头晕, 睡眠障碍, 高血压, 支气管哮喘',
-          labels: ['可开处方'],
-          value: 5
-        }
-      ]
+      tabs: ['待支付', '已支付', '待接诊', '已取消'],
+      list: []
+    }
+  },
+  watch: {
+    activeName () {
+      console.log(this.activeName)
+      this.status = this.activeName
+      this.getData(1)
     }
   },
   methods: {
@@ -70,7 +69,48 @@ export default {
     },
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
+    },
+    shiftText (item) {
+      console.log(item.status)
+      switch (item.status) {
+        case '0':
+          item.statusText = '待支付'
+          item.FnText = '去支付'
+          // debugger
+          break
+        case '1':
+          item.statusText = '待发货'
+          item.FnText = '详情'
+          break
+        case '2':
+          item.statusText = '待收货'
+          item.FnText = '详情'
+          break
+        case '3':
+          item.statusText = '待评价'
+          item.FnText = '去评价'
+          break
+      }
+    },
+    getData (pageNo) {
+      let data = {
+        status: this.status,
+        pageNo: pageNo,
+        pageSize: 10
+      }
+      this.$https.fetchGet(`order/queryOnlineOrderPage`, data).then((data) => {
+        this.list = data.result
+        for (let item of this.list) {
+          this.shiftText(item)
+        }
+        console.log(this.list)
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData(1)
   }
 }
 </script>
@@ -153,5 +193,15 @@ export default {
     margin: auto;
     /*background: #EFEFEF;*/
     padding-top: 20px;
+  }
+
+  .noneDataIcon{
+    text-align: center;
+    img {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      margin-top: 12vh;
+    }
   }
 </style>

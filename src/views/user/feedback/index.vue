@@ -15,43 +15,96 @@
         <div class="itemImage text-center">
           <img src="@/assets/image/userIcon/addIcon.png" alt="">
         </div>
-<!--        <img src="" alt="" class="itemImage">-->
       </div>
-      <div class="addAddress text-center theme_bc">
+      <div class="addAddress text-center theme_bc" @click="submitFn">
         <div class="colorff font30">提交</div>
       </div>
     </div>
     <van-popup v-model="showPicker" position="bottom">
       <van-picker
         show-toolbar
-        :columns="columns"
+        :columns="queryFeedbackTypeList"
         @cancel="showPicker = false"
         @confirm="onConfirm"
       />
     </van-popup>
     <div class="active ff">
       <span class="font28 color6">手机号（选填）</span>
-<!--      <van-switch v-model="checked" active-color="#00BD75" size="24px" class="flo_r" />-->
-      <input type="text" placeholder="请输入" class="input text-right font28 flo_r">
+      <input type="number" placeholder="请输入" class="input text-right font28 flo_r" v-model="mobile">
     </div>
   </div>
 </template>
 
 <script>
+import {Toast, Dialog} from 'vant'
 export default {
   data () {
     return {
+      showPicker: false,
+      list: [],
       text: '',
       value: '',
-      showPicker: false,
-      columns: ['测试', '测试', '测试', '测试', '测试']
+      mobile: '',
+      urls: 'http://img0.imgtn.bdimg.com/it/u=3256100974,305075936&fm=26&gp=0.jpg',
+      queryFeedbackTypeList: []
     }
+  },
+  components: {
+    [Dialog.Component.name]: Dialog.Component
   },
   methods: {
     onConfirm (value) {
       this.value = value
       this.showPicker = false
+    },
+    getData () {
+      this.$https.fetchGet('feedback/queryFeedbackTypeList').then((data) => {
+        console.log(data)
+        this.list = data
+        this.queryFeedbackTypeList = data.map((item) => {
+          return item.typeName
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    gotoPage (URL) {
+      this.$router.push({path: URL})
+    },
+    submitFn () {
+      let feedbackTypeId = ''
+      for (let item of this.list) {
+        if (item.typeName == this.value) {
+          feedbackTypeId = item.feedbackTypeId
+        }
+      }
+      let data = {
+        feedbackType: feedbackTypeId,
+        content: this.text
+      }
+      for (let index in data) {
+        if (!data[index]) {
+          Toast.fail('请填写完整信息后保存')
+          return
+        }
+      }
+      data.mobile = this.mobile
+      data.urls = this.urls
+      console.log(data)
+      this.$https.fetchPost(`feedback/saveFeedback`, data).then((data) => {
+        Dialog.alert({
+          title: '反馈成功',
+          message: '您的问题已经成功反馈，我们将尽快解决您反馈的问题！'
+        }).then(() => {
+          this.gotoPage('/mine/entry')
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

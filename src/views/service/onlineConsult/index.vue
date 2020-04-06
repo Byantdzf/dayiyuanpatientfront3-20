@@ -4,17 +4,17 @@
       慢性恢复诊患者开具线上处方，不能为初诊患者开具处方。</div>
     <div class="infoWrapper">
       <div class="flo_l">
-        <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3072212054,4223657569&fm=11&gp=0.jpg" class="photo" alt="">
+        <img :src="doctorDetail.avatar" class="photo" alt="">
       </div>
       <div class="flo_l content text-left ">
         <div class="font30 color3">
-          <span class="font30 color3">黄晓敏</span>
-          <span class="font30 color3 _class">主治医师</span>
+          <span class="font30 color3">{{doctorDetail.doctorName}}</span>
+          <span class="font30 color3 _class">{{doctorDetail.title}}</span>
           <img src="@/assets/image/homeIcon/scoreIcon.png" class="icon" alt="">
-          <span class="score font26">5.0</span>
+          <span class="score font26">{{doctorDetail.praiseCount}}</span>
         </div>
-        <p class="font26 title ">北京大学第三医师</p>
-        <p class="font22 color9 merit flo_l">擅长：脑血管栓、头疼、头晕、睡眠障碍、高…</p>
+        <p class="font26 title ">{{doctorDetail.orgName}}</p>
+        <p class="font22 color9 merit flo_l ellipsis_1">擅长：{{doctorDetail.speciality}}</p>
       </div>
       <div class="clearfloat"></div>
     </div>
@@ -24,36 +24,36 @@
         <p class="font36 bold color3 title">填写问诊资料</p>
         <p style="color: #DD9C44;" class ="font26 title">填写以下信息，完善资料信息</p>
         <p class="color9 font28 title">咨询人</p>
-        <p class="name font28 colorTheme inline-block">欧阳锋</p>
-        <div class="inline-block addStyle font28 colorTheme ">添加咨询人</div>
+        <p class="name font28 colorTheme inline-block">{{defaultPatient.patientName || '请重新选择'}}</p>
+        <div class="inline-block addStyle font28 colorTheme " @click="show = true">切换问诊人</div>
       </div>
       <div class="listItem">
         <p class="font28 color3 inline-block flo_l">请选择本次患病时间</p>
-        <div class="flo_r" style="width: 42%;">
+        <div class="flo_r" style="width: 42%;" @click="showSickTime = true,showIndex = 1">
           <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-          <input type="text" placeholder="请选择" readonly class="input font28 flo_r">
+          <input type="text" placeholder="请选择" readonly class="input font28 flo_r" :value="sickTime">
         </div>
         <p class="clearfloat"></p>
       </div>
       <div class="listItem">
         <p class="font28 color3 inline-block">是否有过敏史</p>
-        <div class="flo_r" style="width: 42%;">
+        <div class="flo_r" style="width: 42%;" @click="showSickTime = true,showIndex = 2">
           <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-          <input type="text" placeholder="请选择" readonly class="input font28 flo_r">
+          <input type="text" placeholder="请选择" readonly class="input font28 flo_r" :value="isAllergiced">
         </div>
       </div>
       <div class="listItem">
         <p class="font28 color3 inline-block">当前是否正在服用药物</p>
-        <div class="flo_r" style="width: 42%;">
+        <div class="flo_r" style="width: 42%;"  @click="showSickTime = true,showIndex = 3">
           <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-          <input type="text" placeholder="请选择" readonly class="input font28 flo_r">
+          <input type="text" placeholder="请选择" readonly class="input font28 flo_r" :value="isMedicine">
         </div>
       </div>
       <div class="listItem">
         <p class="font28 color3 inline-block">是否有过手术、放疗等重大疾病治疗经历及慢性病史</p>
-        <div class="flo_r" style="width: 42%;margin-top: 6px">
+        <div class="flo_r" style="width: 42%;margin-top: 6px"  @click="showSickTime = true,showIndex = 4">
           <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-          <input type="text" placeholder="请选择" readonly class="input font28 flo_r">
+          <input type="text" placeholder="请选择" readonly class="input font28 flo_r" :value="isSeriousDisease">
         </div>
       </div>
       <div class="listItem">
@@ -67,7 +67,7 @@
       <div class="mainDescribe">
         <p class="font28 color9 title">病情描述</p>
         <div class="noBorder">
-          <textarea class="textareaStyle font26 color6" v-model="text" maxlength="10" placeholder="#为了更好获得医生帮助，请详细描述您的疾病、症状、 就诊经历和用药情况，我们会保证您的隐私安全#"></textarea>
+          <textarea class="textareaStyle font26 color6" v-model="diseaseDesc" maxlength="10" placeholder="#为了更好获得医生帮助，请详细描述您的疾病、症状、 就诊经历和用药情况，我们会保证您的隐私安全#"></textarea>
           <p class="color9 font24">{{text.length}}/100</p>
         </div>
         <van-uploader class="uploader" v-model="fileList" multiple />
@@ -90,34 +90,202 @@
       </div>
       <div class="height160"></div>
       <div class="btnBoxFn ff">
-        <div class="font32 color3 flo_l"><span class="price">免费</span></div>
-        <div class="_btn colorff flo_r text-center" @click="gotoPage('/order/paySuccess')">立即提交</div>
+        <div class="font32 color3 flo_l">
+          <span class="price" v-if="price">{{price}}元</span>
+          <span class="price" v-else>免费</span>
+        </div>
+        <div class="_btn colorff flo_r text-center" @click="submitFn">立即提交</div>
       </div>
     </div>
+    <van-action-sheet v-model="show" title="选择问诊人">
+      <div class="sheetContent">
+        <div class="sheetItem font28 color3" :class="item.isDefault==1?'colorTheme bold':''" v-for="(item,index) in this.patientList" :key="index" @click="selectPatient(index)">
+          {{item.patientName}}
+          <span class="font26 flo_r">{{item.sex == 1?'男':'女'}}   {{item.age}}岁</span>
+        </div>
+        <div class="sheetBtn text-center font28 colorTheme">+ 添加就诊人</div>
+      </div>
+    </van-action-sheet>
+    <van-popup
+      v-model="showSickTime"
+      position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="datetime"
+        @confirm=" onConfirm('sickTime',$event)"
+        @cancel="showSickTime = false"
+        v-if="showIndex == 1"
+      />
+      <van-picker
+        show-toolbar
+        :columns="typeList"
+        @cancel="showSickTime = false"
+        @confirm="onConfirm('isAllergiced',$event)"
+        v-if="showIndex == 2"
+      />
+      <van-picker
+        show-toolbar
+        :columns="typeList"
+        @cancel="showSickTime = false"
+        @confirm="onConfirm('isMedicine',$event)"
+        v-if="showIndex == 3"
+      />
+      <van-picker
+        show-toolbar
+        :columns="typeList"
+        @cancel="showSickTime = false"
+        @confirm="onConfirm('isSeriousDisease',$event)"
+        v-if="showIndex == 4"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
+import {Toast} from 'vant'
 export default {
   data () {
     return {
       checked: true,
       text: '',
       fileList: [
-        { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
+        { url: 'https://img.yzcdn.cn/vant/leaf.jpg' }
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-        { url: 'https://cloud-image', isImage: true }
-      ]
+        // { url: 'https://cloud-image', isImage: true }
+      ],
+      id: 0, // 医生id
+      scroll: '',
+      showFn: true,
+      doctorDetail: [],
+      patientList: [], // 咨询人
+      defaultPatient: {}, // 默认咨询人
+      unfold: false,
+      show: false,
+      typeList: ['是', '否'],
+      showIndex: 0,
+      showSickTime: false,
+      currentDate: new Date(),
+      sickTime: '', // 患病时间
+      isAllergiced: '', // 过敏史
+      isMedicine: '', // 服药？
+      isSeriousDisease: '', // 重病
+      diseaseDesc: '', // 描述
+      url: 'https://img.yzcdn.cn/vant/leaf.jpg',
+      doctorId: '',
+      price: ''
     }
   },
   methods: {
     gotoPage (URL) {
       this.$router.push({path: URL})
     },
+    parseTime (d) { // 转换时间
+      const newDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes()
+      return newDate
+    },
     goToMyOrder (name) {
       this.$router.push({ name: name })
+    },
+    onConfirm (title, value) { // 选择时间
+      console.log(title, value)
+      if (title == 'sickTime') {
+        this.sickTime = this.parseTime(value)
+      } else {
+        this[title] = value
+      }
+      this.showSickTime = false
+    },
+    textFn (title) {
+      switch (this[title]) {
+        case '':
+          return ''
+        case '是':
+          return '1'
+        case '否':
+          return '0'
+      }
+    },
+    submitFn () {
+      let data = {
+        patientId: `${this.defaultPatient.patientId}`,
+        patientName: this.defaultPatient.patientName,
+        sickTime: this.sickTime,
+        isAllergiced: this.textFn('isAllergiced'),
+        isMedicine: this.textFn('isMedicine'),
+        isSeriousDisease: this.textFn('isSeriousDisease'),
+        diseaseDesc: this.diseaseDesc,
+        price: this.price,
+        url: this.url,
+        doctorId: this.doctorId
+      }
+      
+      // {
+      //   "patientId":"1",
+      //   "patientName":"张三",
+      //   "sickTime":"2020-03-15 12:00:00",
+      //   "isAllergiced":"0",
+      //   "isMedicine":"1",
+      //   "isSeriousDisease":"1",
+      //   "diseaseDesc":"头晕脑胀",
+      //   "price":0,
+      //   "url":"https://lanhuapp.com/index,https://lanhuapp.com/icon",
+      //   "doctorId":"51540df5255e4d22903b0f83921095ff"
+      // }
+
+      console.log(data)
+      for (let index in data) {
+        if (data[index] === '') {
+          console.log(data[index],index)
+          Toast.fail('请填写完整信息后提交')
+          return
+        }
+      }
+      this.$https.fetchPost(`order/savePatientOrder`, data).then((data) => {
+        // Dialog.alert({
+        //   title: '提交成功',
+        //   message: '您的问题已经成功反馈，我们将尽快解决您反馈的问题！'
+        // }).then(() => {
+        this.gotoPage('/order/paySuccess')
+        // })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    selectPatient (index) { // 选择就诊人
+      console.log(this.patientList)
+      for (let item of this.patientList) {
+        item.isDefault = 0
+      }
+      this.show = false
+      this.defaultPatient = this.patientList[index]
+      this.patientList[index].isDefault = 1
+    },
+    getData () {
+      this.$https.fetchGet(`doctor/detail?doctorId=${this.id}`).then((data) => {
+        let {doctorDetail} = data
+        this.doctorDetail = doctorDetail
+        this.doctorId = doctorDetail.id
+        this.price = doctorDetail.price
+        console.log(doctorDetail)
+      }).catch(err => {
+        console.log(err)
+      })
+      this.$https.fetchGet(`patient/queryPatientList`).then((data) => {
+        this.patientList = data
+        data.map((item) => {
+          if (item.isDefault == 1) {
+            this.defaultPatient = item
+          }
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.id = this.$route.query.id
+    this.getData()
   }
 }
 </script>
@@ -163,6 +331,7 @@ export default {
       }
       .merit{
         margin-top: 20px;
+        width: 76vw;
       }
     }
     .commentsBox{
@@ -251,10 +420,10 @@ export default {
         width: 16px;
         height: 26px;
         margin-left: 8px;
-        margin-top: 16px;
+        margin-top: 14px;
       }
       .input{
-        width: 68%;
+        width: 80%;
         border: none;
         text-align: right;
         margin-top: 8px;
@@ -284,4 +453,24 @@ export default {
        background:rgba(0,189,117,1);
      }
    }
+  .sheetContent {
+    .sheetItem{
+      padding: 22px 30px;
+      margin: 0 30px;
+      border-bottom: 1px solid #F6F6F6;
+      overflow: hidden;
+    }
+    .sheetBtn{
+      height: 72px;
+      line-height: 72px;
+      border: 1px solid #00BD75;
+      width: 90%;
+      border-radius: 42px;
+      margin: 12px auto;
+      margin-bottom: 40px;
+    }
+  }
+  .van-action-sheet__close{
+    right: 16px;
+  }
 </style>

@@ -8,36 +8,99 @@
       </div>
       <div class="userInfo">
         <p class="font28 color3 inline-block">用户昵称</p>
-        <input type="text" placeholder="请填写姓名" value="mamba" class="input font28 flo_r">
+        <input type="text" placeholder="请填写姓名" v-model="userInfo.nickName" class="input font28 flo_r">
       </div>
-      <div class="userInfo">
+      <div class="userInfo"   @click="show = true">
         <p class="font28 color3 inline-block">用户性别</p>
         <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-        <input type="text" placeholder="男" class="input font28 flo_r">
+        <input type="text" placeholder="请选择性别" :value="sex" class="input font28 flo_r" readonly>
       </div>
       <div class="userInfo">
-        <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
         <p class="font28 color3 inline-block">用户地址</p>
+        <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
+        <input type="text" placeholder="请输入地址" v-model="userInfo.address" class="input font28 flo_r">
       </div>
       <div class="userInfo">
         <p class="font28 color3 inline-block">手机号码</p>
         <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
-        <input type="text" placeholder="19954279128" class="input font28 flo_r">
+        <input type="text" placeholder="请输入手机号" v-model="userInfo.userMobile" class="input font28 flo_r">
       </div>
     </div>
-    <div class="addAddress text-center theme_bc">
+    <div class="addAddress text-center theme_bc" @click="submitFn">
       <div class="colorff font30">保存</div>
     </div>
+    <van-popup v-model="show" position="bottom">
+      <van-picker
+        show-toolbar
+        :columns="columns"
+        @confirm="onChange"
+        @cancel="show = false"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+
 export default {
   data () {
     return {
-      checked: false
-
+      checked: false,
+      userInfo: {},
+      show: false,
+      columns: ['男', '女'],
+      sex: ''
     }
+  },
+  methods: {
+    onChange (value) {
+      this.sex = value
+      this.userInfo.sex = value == '男' ? 1 : 0
+      this.show = false
+    },
+    gotoPage (URL) {
+      this.$router.push({path: URL})
+    },
+    goToMyOrder () {
+      this.$router.push({ name: 'OrderList' })
+    },
+    getData () {
+      this.$https.fetchGet('user/userDetial').then((data) => {
+        console.log(data)
+        this.userInfo = data
+        this.sex = data.sex == 1 ? '男' : '女'
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    submitFn () {
+      console.log(this.userInfo)
+      let data = {
+        nickName: this.userInfo.nickName,
+        pic: this.userInfo.pic,
+        userMobile: this.userInfo.userMobile,
+        sex: this.userInfo.sex,
+        address: this.userInfo.address
+      }
+      for (let index in data) {
+        console.info(data[index])
+        if (!data[index]) {
+          Toast.fail('请填写完整信息后保存')
+          return
+        }
+      }
+      console.log(data)
+      this.$https.fetchPost(`user/setUserInfo`, data).then((data) => {
+        Toast.success('保存成功')
+        console.log(data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>
@@ -91,5 +154,12 @@ export default {
     line-height: 88px;
     border-radius: 44px;
     margin: 125px auto;
+  }
+  .van-picker__cancel {
+    color: #999999 !important;
+  }
+
+  .van-picker__confirm {
+    color: #00BD75 !important;
   }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="mainPage">
     <div class="main-list">
-      <div class="listItem" v-for="(item,index) in list" :key="index">
+      <div class="listItem" v-for="(item,index) in list" :key="index" @click="gotoPage(`/user/addPatientsMsg?id=${item.patientId}`)">
         <div class="font28 color3 flo_l title">
           <p class="flo_l">{{item.patientName}}</p>
-          <div class="active text-center font22 colorff flo_l" v-if="item.isDefault">默认</div>
+          <div class="active text-center font22 colorff flo_l" v-if="item.isDefault == 1">默认</div>
         </div>
         <img src="@/assets/image/homeIcon/rightIcon.png" alt="" class="img flo_r">
         <p class="color6 font28 flo_r title">{{item.age}}岁（{{item.sex == 1?'男':'女'}}）</p>

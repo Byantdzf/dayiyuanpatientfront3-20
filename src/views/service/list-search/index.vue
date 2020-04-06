@@ -1,25 +1,30 @@
 <template>
   <div class="listSearch">
     <div class="searchBox">
-      <van-search v-model="searchValue" placeholder="根据医院、疾病或科室搜索医生" style="background: #F5F5F5;width: 88%" class="flo_l">
+      <van-search v-model="searchValue" @search="onSearch" placeholder="根据医院、疾病或科室搜索医生" style="background: #F5F5F5;width: 88%" class="flo_l">
       </van-search>
       <div @click="goBack" style="color: #FF8A30;margin-top: 6px;" class="inline-block flo_r">取消</div>
     </div>
-    <div class="hotSearch" v-if="!searchValue">
+    <div class="hotSearch" v-if="latelySearch.length && !showDoctorList">
       <p class="font26 color9 flo_l">历史搜索</p>
-      <div class="mainDel flo_r">
+      <div class="mainDel flo_r" @click="remove">
         <img src="@/assets/image/userIcon/deleteIcon.png" alt="">
         <span class="font26">清空</span>
       </div>
       <p class="clearfloat"></p>
-      <div class="clickBtn color3 font22 text-center flo_l"  @click="search('深圳')">深圳</div>
+      <div class="clickBtn color3 font22 text-center flo_l" v-for="(item,index) in latelySearch" :key="index"  @click="search(item)">{{item}}</div>
     </div>
-    <div class="hotSearch" v-if="!searchValue">
+    <div class="hotSearch" v-if="!showDoctorList">
       <p class="font26 color9">热门搜索</p>
       <div class="clickBtn color3 font22 text-center flo_l" v-for="(item,index) in hotList" :key="index" @click="search(item)">{{item}}</div>
     </div>
-    <div class="doctorBox" v-if="searchValue">
-      <DoctorList :list="list"></DoctorList>
+    <div class="doctorBox" v-if="showDoctorList">
+      <div v-if="list.length">
+        <DoctorList :list="list"></DoctorList>
+      </div>
+      <div v-else class="text-center btnBox" style="margin-top: 32px;">
+        <span class="font28 color6">暂无搜索信息</span>
+      </div>
       <div class="btnBox font12 text-center">
       </div>
     </div>
@@ -27,6 +32,7 @@
 </template>
 <script>
 import DoctorList from '../../../views/components/doctorList'
+import https from '@/config/http.js'
 
 export default {
   components: {
@@ -35,51 +41,76 @@ export default {
   data () {
     return {
       searchValue: '',
-      hotList: ['感冒', '高血压', '深圳', '上海', '痘痘', '胃痛'],
-      list: [
-        {
-          photo: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3072212054,4223657569&fm=11&gp=0.jpg',
-          title: '北京医院 内科',
-          name: '国红 主任医师',
-          skill: '脑血管, 头疼, 头晕, 睡眠障碍, 高血压, 支气管哮喘',
-          labels: ['可开处方'],
-          value: 5
-        },
-        {
-          photo: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1036745067,4011189473&fm=26&gp=0.jpg',
-          title: '北京医院 内科',
-          name: '国红 主任医师',
-          skill: '脑血管, 头疼, 头晕, 睡眠障碍, 高血压, 支气管哮喘',
-          labels: ['可开处方'],
-          value: 5
-        },
-        {
-          photo: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3072212054,4223657569&fm=11&gp=0.jpg',
-          title: '北京医院 内科',
-          name: '国红 主任医师',
-          skill: '脑血管, 头疼, 头晕, 睡眠障碍, 高血压, 支气管哮喘',
-          labels: ['可开处方'],
-          value: 5
-        }
-      ]
+      hotList: [], // 热门医生
+      latelySearch: [], // 最近搜索
+      showDoctorList: false,
+      list: []
+    }
+  },
+  watch: {
+    searchValue () {
+      console.log(this.searchValue)
+      if (!this.searchValue) this.showDoctorList = false
     }
   },
   methods: {
+    onSearch () {
+      console.log(this.searchValue)
+      this.showDoctorList = true
+      this.latelySearch.unshift(this.searchValue)
+      localStorage.setItem('latelySearch', JSON.stringify(this.latelySearch))
+      console.log(this.latelySearch)
+      this.searchDoctors()
+    },
+    remove () {
+      this.latelySearch = []
+      localStorage.removeItem('latelySearch')
+    },
     search (item) {
       this.searchValue = item
+      this.showDoctorList = true
+      this.searchDoctors()
     },
     goBack () {
       this.$router.go(-1)
+    },
+    getData () {
+      https.fetchGet('search/listLable').then((data) => {
+        console.log(data)
+        this.hotList = data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    searchDoctors () {
+      let data = {
+        keyword: this.searchValue,
+        pageNo: 1,
+        pageSize: 10
+      }
+      console.log(data)
+      https.fetchGet('/search/searchDoctors', data).then((data) => {
+        console.log(data)
+        this.list = data.result
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    console.log(JSON.parse(localStorage.getItem('latelySearch')))
+    if (localStorage.getItem('latelySearch')) {
+      this.latelySearch = JSON.parse(localStorage.getItem('latelySearch'))
+    }
+    this.getData()
   }
 }
-</script>
+</script>ru
 <style lang="less" scoped>
   @import '../../../../src/assets/style/reset';
 
   .listSearch{
     background: white;
-    min-height: 100vh;
     padding: 30px;
     .searchBox{
       overflow: hidden;

@@ -1,15 +1,15 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 
 axios.defaults.timeout = 1000
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.baseURL = 'http://47.115.54.185:8080/p/'
 
 // POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做某件事
   if (config.method === 'post') {
-    config.data = qs.stringify(config.data)
+    config.data = JSON.stringify(config.data)
   }
   return config
 }, (error) => {

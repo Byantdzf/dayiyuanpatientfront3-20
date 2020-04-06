@@ -16,8 +16,10 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import qs from 'qs'
+import https from './config/http.js'
 Vue.prototype.qs = qs
 Vue.prototype.$axios = axios
+Vue.prototype.$https = https
 
 Vue.use(Vant)
 
