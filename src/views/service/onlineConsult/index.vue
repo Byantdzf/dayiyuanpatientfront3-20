@@ -219,7 +219,7 @@ export default {
         url: this.url,
         doctorId: this.doctorId
       }
-      
+
       // {
       //   "patientId":"1",
       //   "patientName":"张三",
@@ -236,7 +236,7 @@ export default {
       console.log(data)
       for (let index in data) {
         if (data[index] === '') {
-          console.log(data[index],index)
+          console.log(data[index], index)
           Toast.fail('请填写完整信息后提交')
           return
         }
@@ -434,25 +434,25 @@ export default {
     }
   }
   .btnBoxFn{
-     width: 100%;
-     height: 100px;
-     line-height: 100px;
-     position: fixed;
-     bottom: 0;
-     left: 0;
-     box-shadow:0px -1px 2px 0px rgba(199,199,199,0.5);
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-shadow:0px -1px 2px 0px rgba(199,199,199,0.5);
 
     .price {
       padding-left: 60px;
       color: #D33636;
       font-size: 40px;
     }
-     ._btn{
-       width:302px;
-       height:100px;
-       background:rgba(0,189,117,1);
-     }
-   }
+    ._btn{
+      width:302px;
+      height:100px;
+      background:rgba(0,189,117,1);
+    }
+  }
   .sheetContent {
     .sheetItem{
       padding: 22px 30px;

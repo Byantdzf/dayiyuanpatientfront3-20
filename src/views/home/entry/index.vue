@@ -10,11 +10,11 @@
     <div class="searchWrapper" @click="focus">
       <img src="@/assets/image/homeIcon/search.png" class="icon" alt="">
       <input type="text" placeholder="搜索医院、疾病、医院"  class="_input font26">
-<!--      <van-search v-model="searchValue" @focus="focus" placeholder="搜索医院、疾病、医院" background=""></van-search>-->
+      <!--      <van-search v-model="searchValue" @focus="focus" placeholder="搜索医院、疾病、医院" background=""></van-search>-->
     </div>
-<!--     banna-->
+    <!--     banna-->
     <div class="bannerWrapper">
-<!--      <img :src="listBanner[0].imgUrl" class="image" alt="">-->
+      <!--      <img :src="listBanner[0].imgUrl" class="image" alt="">-->
       <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=412362369,2838870680&fm=26&gp=0.jpg" class="image" alt="">
     </div>
     <div class="tabWrapper">
@@ -49,9 +49,9 @@
     </div>
     <div class="doctorBox">
       <DoctorList :list="listOrgDoctor"></DoctorList>
-<!--      <div class="btnBox font12 text-center">-->
-<!--        <p class="text">更多此科室的医生</p>-->
-<!--      </div>-->
+      <!--      <div class="btnBox font12 text-center">-->
+      <!--        <p class="text">更多此科室的医生</p>-->
+      <!--      </div>-->
     </div>
     <div class="titleWrapper">
       <p class="title bold font30 flo_l">专科联盟</p>
