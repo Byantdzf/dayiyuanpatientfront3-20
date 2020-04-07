@@ -69,7 +69,7 @@ export default {
     }
     .content{
       width: 84%;
-      margin-left: 24px;
+      margin-left: 22px;
       .name{
         margin-bottom: 6px;
       }

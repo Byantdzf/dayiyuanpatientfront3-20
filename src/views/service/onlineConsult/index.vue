@@ -67,7 +67,7 @@
       <div class="mainDescribe">
         <p class="font28 color9 title">病情描述</p>
         <div class="noBorder">
-          <textarea class="textareaStyle font26 color6" v-model="diseaseDesc" maxlength="10" placeholder="#为了更好获得医生帮助，请详细描述您的疾病、症状、 就诊经历和用药情况，我们会保证您的隐私安全#"></textarea>
+          <textarea class="textareaStyle font26 color6" v-model="diseaseDesc" placeholder="#为了更好获得医生帮助，请详细描述您的疾病、症状、 就诊经历和用药情况，我们会保证您的隐私安全#"></textarea>
           <p class="color9 font24">{{text.length}}/100</p>
         </div>
         <van-uploader class="uploader" v-model="fileList" multiple />
@@ -180,9 +180,16 @@ export default {
     gotoPage (URL) {
       this.$router.push({path: URL})
     },
-    parseTime (d) { // 转换时间
-      const newDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes()
-      return newDate
+    parseTime (date) { // 转换时间
+      date = new Date(date)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      let h = date.getHours()
+      let m1 = date.getMinutes()
+      m = m < 10 ? ('0' + m) : m
+      d = d < 10 ? ('0' + d) : d
+      return y + '-' + m + '-' + d + ' ' + h + ':' + m1
     },
     goToMyOrder (name) {
       this.$router.push({ name: name })
@@ -423,7 +430,7 @@ export default {
         margin-top: 14px;
       }
       .input{
-        width: 80%;
+        width: 86%;
         border: none;
         text-align: right;
         margin-top: 8px;
