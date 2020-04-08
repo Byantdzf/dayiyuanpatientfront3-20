@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item,index) in list" :key="index" class="wrapper" @click="gotoPage(`/service/details?id=${item.deptId}`)">
+    <div v-for="(item,index) in list" :key="index" class="wrapper" @click="gotoPage(`/service/details?id=${item.doctorId}`)">
       <div class="flo_l">
         <img :src="item.avatar" class="image" alt="">
       </div>

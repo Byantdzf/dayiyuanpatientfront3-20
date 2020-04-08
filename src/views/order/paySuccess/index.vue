@@ -7,22 +7,39 @@
       </div>
       <p class="text-center price">
         <span class="font28 colorff">实付款</span>
-        <span class="font32 colorff">￥690</span>
+        <span class="font32 colorff">￥{{orderData.price}}</span>
       </p>
     </div>
     <div class="ff DrugOrder">
       <div class="color6 font26 _title">
         <span>订单编号  </span>
-        <span class="color3 _value">123443242424</span>
-        <p class="inline-block font26 color3 copy text-center">复制</p>
+        <span class="color3 _value">{{orderData.orderNo}}</span>
+        <!--<p class="inline-block font26 color3 copy text-center">复制</p>-->
       </div>
       <div class="color6 font26 _title">
         <span>下单时间  </span>
-        <span class="color3 _value">2020.02.01 12:22</span>
+        <span class="color3 _value">{{orderData.createTime}}</span>
       </div>
     </div>
-    <div class="colorff text-center font30 _home" @click="gotoPage('/home/entry')">返回主页</div>
-    <div class="color3 font30 _order text-center">我的订单</div>
+    <div class="infoWrapper">
+      <div class="flo_l">
+        <img :src="orderData.avatar" class="photo" alt="">
+      </div>
+      <div class="flo_l content text-left ">
+        <div class="font30 color3">
+          <span class="font30 color3">{{orderData.doctorName}}</span>
+          <span class="font30 color3 _class">{{orderData.title}}</span>
+          <img src="@/assets/image/homeIcon/scoreIcon.png" class="icon" alt="">
+          <span class="score font26">{{orderData.praiseCount || 0}}</span>
+        </div>
+        <p class="font26 title ">{{orderData.orgName}}</p>
+        <p class="font22 color9 merit flo_l ellipsis_1">擅长：{{orderData.speciality}}</p>
+      </div>
+      <div class="clearfloat"></div>
+    </div>
+    <div class="colorff text-center font30 _home" @click="gotoPage('/home/entry')">查看咨询对话</div>
+    <div class="colorff text-center font30 _home" @click="gotoPage('/home/entry')">主页</div>
+    <div class="color3 font30 _order text-center" @click="gotoPage('/user/consultOrders')">我的订单</div>
     <p class="font28 color9 text-center text-center">本次支付已成功，详细信息请进入我的订单查看</p>
   </div>
 </template>
@@ -31,7 +48,8 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      orderData: {}
     }
   },
   methods: {
@@ -40,7 +58,21 @@ export default {
     },
     goToMyOrder (name) {
       this.$router.push({ name: name })
+    },
+    getData () {
+      this.$https.fetchGet(`order/queryPatientOrderDetail?orderId=1`).then((data) => {
+        console.log(data)
+        this.orderData = data
+        console.log(this.orderData)
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.id = this.$route.query.id
+    this.getData()
+    window.addEventListener('scroll', this.menu)
   }
 }
 </script>
@@ -113,11 +145,58 @@ export default {
     line-height: 90px;
     background:rgba(0,189,117,1);
     border-radius:10px;
-    margin: 80px auto;
+    margin: auto;
+    margin-top: 40px;
   }
   ._order{
-    margin-top: -40px;
     margin-bottom: 24px;
     background:rgba(243,243,243,1);
+  }
+  .infoWrapper{
+    padding: 30px;
+    background: white;
+    border-bottom: 1px solid #E7E7E7;
+    .photo{
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+    }
+    .score{
+      color: #FF8A30;
+      margin-right: 20px;
+    }
+    .content{
+      width: 76%;
+      padding: 6px 22px;
+      ._class{
+        margin-left: 22px;
+      }
+      .title{
+        color: #666666;
+        margin: 4px 0;
+      }
+      .icon{
+        width: 22px;
+        height: 22px;
+      }
+      .merit{
+        margin-top: 20px;
+        width: 76vw;
+      }
+    }
+    .commentsBox{
+      width:670px;
+      height:120px;
+      background:rgba(137,137,137,.2);
+      border-radius:60px;
+      color: white;
+      margin-top: 18px;
+      .itemStyle{
+        width: 30%;
+        display: inline-block;
+        margin-top: 26px;
+      }
+    }
   }
 </style>

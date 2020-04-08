@@ -1,10 +1,10 @@
 <template>
   <div class="mainBox">
     <van-dropdown-menu style="margin-bottom: 10px;">
-      <van-dropdown-item v-model="value1" :options="option1" />
+      <van-dropdown-item v-model="value" :options.sync="option" />
     </van-dropdown-menu>
     <div class="_userInfo ff">
-      <p class="color3 font26"><span class="color6">姓名：</span>{{option1[value1].text}}</p>
+      <p class="color3 font26"><span class="color6">姓名：</span>{{option[value].text}}</p>
       <p class="color3 font26"><span class="color6">性别：</span>男</p>
       <p class="color3 font26"><span class="color6">年龄：</span>24</p>
     </div>
@@ -20,7 +20,7 @@
               <p class="font26 color6 title">{{item.title}}</p>
               <p class="font26 color9 title">病情描述：<span class="color3">脑血管栓、头疼、头晕、睡眠障碍、高 血压患者、妇过敏性疾病、手足口呆</span></p>
               <p class="font26 color9 title">诊断：<span class="color3">血糖偏低，血小板活性不足，血糖偏低，不 抽烟，多喝水，多运动，不熬夜</span></p>
-              <p class="font24 color9 title flo_l">就诊人: {{option1[value1].text}}  30(男)</p>
+              <p class="font24 color9 title flo_l" v-if="option.length > 0">就诊人: {{option[value].text}}  30(男)</p>
               <p class="font24 color9 title flo_r">2020.02.22 13.34</p>
             </div>
             <div class="_dotV flo_r" ></div>
@@ -41,14 +41,9 @@
 export default {
   data () {
     return {
-      value1: 0,
-      option1: [
-        { text: '李四', value: 0 },
-        { text: '张三', value: 1 },
-        { text: '老王', value: 2 }
-      ],
-      activeName: 'a',
-      tabs: ['全部', '待支付', '待发货', '待收货', '已取消'],
+      value: 0,
+      patientList: [], // 患者信息
+      option: [],
       list: [
         {
           photo: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3072212054,4223657569&fm=11&gp=0.jpg',
@@ -67,7 +62,32 @@ export default {
     },
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
+    },
+    getData () {
+      this.$https.fetchGet('patient/queryPatientList').then((data) => {
+        console.log(data)
+        this.patientList = data
+        for (let index in data) {
+          if (data[index].patientName) {
+            this.option.push({
+              text: data[index].patientName,
+              value: index,
+              sex: data[index].sex,
+              age: data[index].age
+            })
+            if (data[index].isDefault == 1) {
+              this.value = index
+            }
+          }
+          console.log(this.option, this.value)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

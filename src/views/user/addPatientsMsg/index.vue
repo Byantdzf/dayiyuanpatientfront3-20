@@ -117,7 +117,7 @@ export default {
         title: '温馨提示',
         message: '是否确认删除该患者信息？'
       }).then(() => {
-        this.$https.fetchGet(`address/deleteAddr?patientId=${this.patientId}`).then((data) => {
+        this.$https.fetchGet(`patient/removePatient?patientId=${this.patientId}`).then((data) => {
           console.log(data)
           Toast.success('删除成功')
           this.gotoPage('/user/patientsMsg')

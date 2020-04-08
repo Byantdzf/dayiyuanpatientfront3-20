@@ -217,7 +217,7 @@ export default {
       let data = {
         patientId: `${this.defaultPatient.patientId}`,
         patientName: this.defaultPatient.patientName,
-        sickTime: this.sickTime,
+        sickTime: `${this.sickTime}:00`,
         isAllergiced: this.textFn('isAllergiced'),
         isMedicine: this.textFn('isMedicine'),
         isSeriousDisease: this.textFn('isSeriousDisease'),

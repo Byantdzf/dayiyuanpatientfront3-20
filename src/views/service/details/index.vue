@@ -10,7 +10,7 @@
           <span class="font28 colorff _class">{{doctorDetail.title}}</span>
         </p>
         <p class="font26 title colorff">{{doctorDetail.orgName}}</p>
-        <p class="font22 colorTheme label flo_l">{{doctorDetail.character}}</p>
+        <p class="font22 colorTheme label flo_l" v-if="doctorDetail.character">{{doctorDetail.character}}</p>
       </div>
       <div class="clearfloat"></div>
       <div class="commentsBox">

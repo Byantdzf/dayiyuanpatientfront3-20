@@ -99,6 +99,10 @@ export default {
         pageSize: 10
       }
       this.$https.fetchGet(`order/queryOnlineOrderPage`, data).then((data) => {
+        if (data.result.length < 0) {
+          this.list = []
+          return
+        }
         this.list = data.result
         for (let item of this.list) {
           this.shiftText(item)
