@@ -124,7 +124,7 @@ export default {
 <style lang="less" scoped>
   @import '../../../../src/assets/style/reset';
   ._prescription{
-    background:rgba(247,247,247,1);
+    background: #F2F2F2;
     min-height: 100vh;
   }
   .van-tab--active {

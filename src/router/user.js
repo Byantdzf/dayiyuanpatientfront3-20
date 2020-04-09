@@ -56,6 +56,12 @@ export default [
             meta: { title: '病例档案' }
           },
           {
+            path: 'caseDetails',
+            name: 'mineCaseDetails',
+            component: _import('user/caseDetails'),
+            meta: { title: '病例详情' }
+          },
+          {
             path: 'addCaseFile',
             name: 'mineAddCaseFile',
             component: _import('user/addCaseFile'),

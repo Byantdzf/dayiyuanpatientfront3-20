@@ -10,7 +10,7 @@
     </div>
     <template name="list">
       <div  v-for="(item,index) in list" :key="index">
-        <div class="wrapper ff" @click="gotoPage">
+        <div class="wrapper ff" @click="gotoPage(`/user/caseDetails?id=${item.patientCaseId}`)">
           <div class="listItem">
             <div class="flo_l">
               <img src="@/assets/image/homeIcon/photo.png" class="image" alt="">
@@ -29,6 +29,10 @@
         </div>
         <div class="_dot" v-if="index != list.length"></div>
         <p class="clearfloat"></p>
+      </div>
+      <div v-if="list.length < 1" class="noneDataIcon">
+        <img src="../../../assets/image/pic_noneData.png" alt="">
+        <p class="color9 font30">暂无病例信息</p>
       </div>
     </template>
     <div class="addFn text-center theme_bc" @click="gotoPage('/user/addCaseFile')">
@@ -198,5 +202,14 @@ export default {
     left: 30px;
     line-height: 88px;
     border-radius: 44px;
+  }
+  .noneDataIcon{
+    text-align: center;
+    img {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      margin-top: 12vh;
+    }
   }
 </style>
