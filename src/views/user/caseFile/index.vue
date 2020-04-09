@@ -4,24 +4,24 @@
       <van-dropdown-item v-model="value" :options.sync="option" />
     </van-dropdown-menu>
     <div class="_userInfo ff">
-      <p class="color3 font26"><span class="color6">姓名：</span>{{option[value].text}}</p>
-      <p class="color3 font26"><span class="color6">性别：</span>男</p>
-      <p class="color3 font26"><span class="color6">年龄：</span>24</p>
+      <p class="color3 font26" v-if="option[value]"><span class="color6">姓名：</span>{{option[value].text}}</p>
+      <p class="color3 font26"><span class="color6">性别：</span>{{option[value].sex==1?'男':'女'}}</p>
+      <p class="color3 font26"><span class="color6">年龄：</span>{{option[value].age}}</p>
     </div>
     <template name="list">
       <div  v-for="(item,index) in list" :key="index">
         <div class="wrapper ff" @click="gotoPage">
           <div class="listItem">
             <div class="flo_l">
-              <img :src="item.photo" class="image" alt="">
+              <img src="@/assets/image/homeIcon/photo.png" class="image" alt="">
             </div>
             <div class="flo_l content text-left ">
-              <p class="font30 color3 bold name inline-block">{{item.name}}</p>
-              <p class="font26 color6 title">{{item.title}}</p>
-              <p class="font26 color9 title">病情描述：<span class="color3">脑血管栓、头疼、头晕、睡眠障碍、高 血压患者、妇过敏性疾病、手足口呆</span></p>
-              <p class="font26 color9 title">诊断：<span class="color3">血糖偏低，血小板活性不足，血糖偏低，不 抽烟，多喝水，多运动，不熬夜</span></p>
-              <p class="font24 color9 title flo_l" v-if="option.length > 0">就诊人: {{option[value].text}}  30(男)</p>
-              <p class="font24 color9 title flo_r">2020.02.22 13.34</p>
+              <p class="font30 color3 bold name inline-block">{{item.receptionDoctor}}</p>
+              <p class="font26 color6 title">{{item.receptionOrg}} {{item.receptionDept}}</p>
+              <p class="font26 color9 title">病情描述：<span class="color3">{{item.diseaseDesc}}</span></p>
+              <p class="font26 color9 title">诊断：<span class="color3">{{item.chineseDiagnosis || item.westernDiagnosis}}</span></p>
+              <p class="font24 color9 title flo_l" v-if="option[value]">就诊人: {{option[value].text}}  {{option[value].age}}({{option[value].sex==1?'男':'女'}})</p>
+              <p class="font24 color9 title flo_r">{{item.receptionTime}}</p>
             </div>
             <div class="_dotV flo_r" ></div>
             <p class="clearfloat"></p>
@@ -43,6 +43,7 @@ export default {
     return {
       value: 0,
       patientList: [], // 患者信息
+      patientId: 0, // 患者id
       option: [],
       list: [
         {
@@ -56,6 +57,13 @@ export default {
       ]
     }
   },
+  watch: {
+    value () {
+      this.patientId = this.patientList[this.value].patientId
+      console.log(this.patientId)
+      this.getCaseList()
+    }
+  },
   methods: {
     gotoPage (URL) {
       this.$router.push({path: URL})
@@ -63,7 +71,15 @@ export default {
     goToMyOrder () {
       this.$router.push({ name: 'OrderList' })
     },
-    getData () {
+    getCaseList () { // 获得患者对应的数据
+      this.$https.fetchGet(`patientCase/queryCaseList?patientId=${this.patientId}`).then((data) => {
+        this.list = data
+        // console.log(this.list)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    getPatientList () { // 获得患者数据
       this.$https.fetchGet('patient/queryPatientList').then((data) => {
         console.log(data)
         this.patientList = data
@@ -73,7 +89,8 @@ export default {
               text: data[index].patientName,
               value: index,
               sex: data[index].sex,
-              age: data[index].age
+              age: data[index].age,
+              patientId: data[index].patientId
             })
             if (data[index].isDefault == 1) {
               this.value = index
@@ -87,7 +104,7 @@ export default {
     }
   },
   mounted () {
-    this.getData()
+    this.getPatientList()
   }
 }
 </script>
@@ -128,7 +145,7 @@ export default {
       width: 80%;
       padding: 0px 24px;
       margin-top: -6px;
-      padding-right: 30px;
+      padding-right: 26px;
       .name{
         margin-bottom: 6px;
       }
