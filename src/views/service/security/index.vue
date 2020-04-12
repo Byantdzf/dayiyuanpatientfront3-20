@@ -21,8 +21,8 @@
       <van-dropdown-item v-model="value" title="全国" :options="option" />
       <van-dropdown-item v-model="value" title="排序" :options="option" />
       <van-dropdown-item title="筛选" ref="item">
-        <van-switch-cell v-model="switch1" title="包邮" />
-        <van-switch-cell v-model="switch2" title="团购" />
+        <van-switch-cell v-model="switch1" title="可开处方" />
+        <van-switch-cell v-model="switch2" title="三甲医院" />
         <van-button block type="info" @click="onConfirm">确认</van-button>
       </van-dropdown-item>
     </van-dropdown-menu>

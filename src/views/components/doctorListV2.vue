@@ -4,7 +4,7 @@
       <div class="flo_l">
         <img :src="item.photo" class="image" alt="">
       </div>
-      <div class="flo_l content text-left ">
+      <div class="flo_l _content text-left ">
         <p class="font30 color3 bold name">{{item.name}}</p>
         <p class="font24 color6 title">{{item.title}}</p>
         <p class="font24 ellipsis_1 color9 title">擅长：{{item.skill}}</p>
@@ -67,7 +67,7 @@ export default {
       height: 80px;
       border-radius: 50%;
     }
-    .content{
+    ._content{
       width: 84%;
       margin-left: 22px;
       .name{

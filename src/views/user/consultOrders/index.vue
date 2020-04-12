@@ -8,7 +8,7 @@
     <template name="list">
       <div v-if="list.length>0">
         <div  v-for="(item,index) in list" :key="index">
-          <div class="wrapper ff" @click="gotoPage('/user/consultOrderDetail')">
+          <div class="wrapper ff" @click="gotoPage(`/user/consultOrderDetail?id=${item.orderPatientId}`)">
             <div class="listItem">
               <div class="flo_l">
                 <img :src="item.avatar" class="image" alt="">
@@ -23,9 +23,9 @@
                 <p class="font26 color9 title flo_l">就诊人：李四 30(男)</p>
                 <p class="font24 color9 title flo_r">2020.02.22 13.34</p>
               </div>
-              <div class="_dotV flo_r" ></div>
-              <div class="flo_l content contentV  text-left">
-                <p class="btnStyle font26 colorff text-center flo_r">{{item.FnText}}</p>
+              <div class="_dotV flo_r"  v-if="item.FnText"></div>
+              <div class="flo_l content contentV  text-left"  v-if="item.FnText">
+                <p class="btnStyle font26 colorff text-center flo_r" >{{item.FnText}}</p>
                 <p class="btnStyle cancel font26 color3 text-center flo_r" v-if="item.FnText">取消</p>
               </div>
               <p class="clearfloat"></p>
@@ -90,6 +90,10 @@ export default {
           item.statusText = '待评价'
           item.FnText = '去评价'
           break
+        case '4':
+          item.statusText = '已完成'
+          item.FnText = ''
+          break
       }
     },
     getData (pageNo) {
@@ -118,7 +122,7 @@ export default {
   }
 }
 </script>
-<!--<style lang='scss' src='index.scss'></style>-->
+<!--<style lang='scss' src='index.less'></style>-->
 <style lang="less">
   @import '../../../../src/assets/style/reset';
   body{
